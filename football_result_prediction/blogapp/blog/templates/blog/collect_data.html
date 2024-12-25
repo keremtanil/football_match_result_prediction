@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <!-- Header Section -->
+  <h2 class="text-center mb-4">Veri Filtreleme ve Görüntüleme</h2>
+
+  <!-- Dropdown and Button Section -->
+  <div class="row justify-content-center mb-4">
+    <!-- First Dropdown -->
+    <div class="col-md-4 mb-3 mb-md-0">
+      <div class="dropdown">
+        <button id="leagueDropdown" class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Lig Seçiniz
+        </button>
+        <ul class="dropdown-menu w-100">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Second Dropdown -->
+    <div class="col-md-4 mb-3 mb-md-0">
+      <div class="dropdown">
+        <button id="seasonDropdown" class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Sezon Seçiniz
+        </button>
+        <ul class="dropdown-menu w-100">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+      </div>
+    </div>
+  </div> <!-- .row -->
+
+  <!-- Table Section -->
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Başlık 1</th>
+          <th>Başlık 2</th>
+          <th>Başlık 3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Veri 1</td>
+          <td>Veri 2</td>
+          <td>Veri 3</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div> <!-- .container -->
+{% endblock %}
