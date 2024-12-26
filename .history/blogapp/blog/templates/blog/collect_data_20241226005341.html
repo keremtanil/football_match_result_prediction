@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <!-- Header Section -->
+  <h2 class="text-center mb-4">Veri Filtreleme ve Görüntüleme</h2>
+  <!-- Form Başlangıcı -->
+  <form method="GET" action="{% url 'collect' %}">
+    <!-- Dropdown and Button Section -->s
+    <div class="row justify-content-center mb-4">
+      <!-- First Dropdown -->
+      <div class="col-md-4 mb-3 mb-md-0">
+        <div class="dropdown">
+          <button id="leagueDropdown" class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Lig Seçiniz
+          </button>
+          <ul class="dropdown-menu w-100">
+            {% for league in leagues %}
+            <li>
+              <a class="dropdown-item" href="#" onclick="updateDropdownAndInput('leagueDropdown', 'leagueInput', '{{ league.league }}')">
+                {{ league.league }}
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          <!-- Gizli Input -->
+          <input type="hidden" id="leagueInput" name="league">
+        </div>
+      </div>
+
+      <!-- Second Dropdown -->
+      <div class="col-md-4 mb-3 mb-md-0">
+        <div class="dropdown">
+          <button id="seasonDropdown" class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Sezon Seçiniz
+          </button>
+          <ul class="dropdown-menu w-100">
+            {% for season in seasons %}
+            <li>
+              <a class="dropdown-item" href="#" onclick="updateDropdownAndInput('seasonDropdown', 'seasonInput', '{{ season.season }}')">
+                {{ season.season }}
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          <!-- Gizli Input -->
+          <input type="hidden" id="seasonInput" name="season">
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="col-md-4">
+        <button type="submit" class="btn btn-success w-100">Veri Çek</button>
+      </div>
+    </div>
+  </form>
+  </div> <!-- .row -->
+
+  <!-- Table Section -->
+  <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+    <table class="table table-bordered table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Hafta</th>
+          <th>Gün</th>
+          <th>Tarih</th>
+          <th>Saat</th>
+          <th>Ev Sahibi Takım</th>
+          <th>xG</th>
+          <th>Skor</th>
+          <th>xG</th>
+          <th>Deplasman Takım</th>
+          <th>Katılımcı Sayısı</th>
+          <th>Stadyum</th>
+          <th>Hakem</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in table_data %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ row.wk }}</td>
+          <td>{{ row.day }}</td>
+          <td>{{ row.date }}</td>
+          <td>{{ row.time }}</td>
+          <td>{{ row.home }}</td>
+          <td>{{ row.xg1 }}</td>
+          <td>{{ row.score }}</td>
+          <td>{{ row.xg2 }}</td>
+          <td>{{ row.away }}</td>
+          <td>{{ row.attendance }}</td>
+          <td>{{ row.venue }}</td>
+          <td>{{ row.referee }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <script>
+    function updateDropdownAndInput(dropdownId, inputId, selectedText) {
+      // Dropdown butonunun üzerindeki metni değiştir
+      document.getElementById(dropdownId).textContent = selectedText;
+      // İlgili gizli input'un değerini seçilen metinle güncelle
+      document.getElementById(inputId).value = selectedText;
+    }
+  </script> 
+{% endblock %}
