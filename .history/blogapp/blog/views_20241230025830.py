@@ -29,7 +29,7 @@ data ={
             "league": "None",
         }
     ],
-    "seasons": [{"season": f"{year}/{year+1}"} for year in range(datetime.now().year -1, 2016, -1)] + [{"season": "None"}],
+    "seasons": [{"season": f"{year}/{year+1}"} for year in range(datetime.now().year, 1999, -1)] + [{"season": "None"}],
 }
 def index(request):
     return render(request, "blog/index.html")
@@ -49,6 +49,7 @@ def collect_data(request):
         season_year = selected_season.split('/')[0]
         general = general.filter(season=season_year)
 
+    print(general.count())
     # Dinamik olarak oyuncu bilgilerini getirin
     merged_data = []
     for match in general:

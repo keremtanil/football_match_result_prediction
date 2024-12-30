@@ -80,8 +80,8 @@
         <th>Stadyum</th>
         <th>Hakem</th>
         <!-- Dinamik olarak oyuncu sütunları -->
-        {% if merged_data|length > 0 %}
-          {% for i in merged_data.0.home_players %}
+        {% if data|length > 0 %}
+          {% for i in data.0.home_players %}
             <th>{{ forloop.counter }}. Ev Sahibi Oyuncu İsim</th>
             <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Forma Numarası</th>
             <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Uyruk</th>
@@ -106,15 +106,16 @@
             <th>{{ forloop.counter }}. Ev Sahibi Oyuncu SCA</th>
             <th>{{ forloop.counter }}. Ev Sahibi Oyuncu GCA</th>
             <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Passes Completed</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Passes Attempted</th>
+            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Passes Attempted</th>>
             <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Pass Completion</th>
             <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Progressive Passes</th>
             <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Carries</th>
             <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Progressive Carries</th>
             <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Take-Ons Attempted</th>
             <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Successful Take Ons</th>
+
           {% endfor %}
-          {% for i in merged_data.0.away_players %}
+          {% for i in data.0.away_players %}
             <th>{{ forloop.counter }}. Deplasman Oyuncu İsim</th>
             <th>{{ forloop.counter }}. Deplasman Oyuncu Forma Numarası</th>
             <th>{{ forloop.counter }}. Deplasman Oyuncu Uyruk</th>
@@ -139,19 +140,19 @@
             <th>{{ forloop.counter }}. Deplasman Oyuncu SCA</th>
             <th>{{ forloop.counter }}. Deplasman Oyuncu GCA</th>
             <th>{{ forloop.counter }}. Deplasman Oyuncu Passes Completed</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Passes Attempted</th>
+            <th>{{ forloop.counter }}. Deplasman Oyuncu Passes Attempted</th>>
             <th>{{ forloop.counter }}. Deplasman Oyuncu Pass Completion</th>
             <th>{{ forloop.counter }}. Deplasman Oyuncu Progressive Passes</th>
             <th>{{ forloop.counter }}. Deplasman Oyuncu Carries</th>
             <th>{{ forloop.counter }}. Deplasman Oyuncu Progressive Carries</th>
             <th>{{ forloop.counter }}. Deplasman Oyuncu Take-Ons Attempted</th>
             <th>{{ forloop.counter }}. Deplasman Oyuncu Successful Take Ons</th>
-          {% endfor %} 
+          {% endfor %}
         {% endif %}
       </tr>
     </thead>
     <tbody>
-      {% for data in merged_data  %}
+      {% for data in data  %}
       <tr>
         <td>{{ forloop.counter }}</td>
         <td>{{ data.match.wk }}</td>
@@ -196,7 +197,6 @@
         <td>{{ player.home_player_cmp_rate }}</td>
         <td>{{ player.home_player_prgp }}</td>
         <td>{{ player.home_player_carries }}</td>
-        <td>{{ player.home_player_prgc }}</td>
         <td>{{ player.home_player_att2 }}</td>
         <td>{{ player.home_player_succ }}</td>
         {% endfor %}
@@ -229,7 +229,6 @@
         <td>{{ player.away_player_cmp_rate }}</td>
         <td>{{ player.away_player_prgp }}</td>
         <td>{{ player.away_player_carries }}</td>
-        <td>{{ player.home_player_prgc }}</td>
         <td>{{ player.away_player_att2 }}</td>
         <td>{{ player.away_player_succ }}</td>
         {% endfor %}

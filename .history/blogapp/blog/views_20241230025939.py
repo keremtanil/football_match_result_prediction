@@ -29,7 +29,7 @@ data ={
             "league": "None",
         }
     ],
-    "seasons": [{"season": f"{year}/{year+1}"} for year in range(datetime.now().year -1, 2016, -1)] + [{"season": "None"}],
+    "seasons": [{"season": f"{year}/{year+1}"} for year in range(datetime.now().year, 1999, -1)] + [{"season": "None"}],
 }
 def index(request):
     return render(request, "blog/index.html")
@@ -60,6 +60,7 @@ def collect_data(request):
             "home_players": list(home_players),
             "away_players": list(away_players),
         })
+    print(merged_data)
     context = {
         "leagues": data["leagues"],
         "seasons": data["seasons"],

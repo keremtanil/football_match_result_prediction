@@ -29,7 +29,7 @@ data ={
             "league": "None",
         }
     ],
-    "seasons": [{"season": f"{year}/{year+1}"} for year in range(datetime.now().year -1, 2016, -1)] + [{"season": "None"}],
+    "seasons": [{"season": f"{year}/{year+1}"} for year in range(datetime.now().year, 1999, -1)] + [{"season": "None"}],
 }
 def index(request):
     return render(request, "blog/index.html")
@@ -41,13 +41,20 @@ def collect_data(request):
 
     general = tb_general.objects.all()
 
+    matches = tb_general.objects.filter(
+    league="ENG-m",
+    season="2023"
+    )
+    print("Match count:", matches.count())
+
+
     # Filtre uygula (dropdown seçimlerine göre)
     if selected_league and selected_league != "None":
-        general = general.filter(league=selected_league)  # Eğer "league" modelde varsa
+        general = general.filter(league=selected_league.strip())  # Eğer "league" modelde varsa
 
     if selected_season and selected_season != "None":
         season_year = selected_season.split('/')[0]
-        general = general.filter(season=season_year)
+        general = general.filter(season=season_year.strip())
 
     # Dinamik olarak oyuncu bilgilerini getirin
     merged_data = []

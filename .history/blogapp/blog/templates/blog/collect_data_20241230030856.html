@@ -63,7 +63,7 @@
 
 <!-- Table Section -->
 <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
-  <table class="table table-bordered table-striped table-hover">
+  {% comment %} <table class="table table-bordered table-striped table-hover">
     <thead class="table-dark">
       <tr>
         <th>#</th>
@@ -113,6 +113,7 @@
             <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Progressive Carries</th>
             <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Take-Ons Attempted</th>
             <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Successful Take Ons</th>
+
           {% endfor %}
           {% for i in merged_data.0.away_players %}
             <th>{{ forloop.counter }}. Deplasman Oyuncu İsim</th>
@@ -139,14 +140,14 @@
             <th>{{ forloop.counter }}. Deplasman Oyuncu SCA</th>
             <th>{{ forloop.counter }}. Deplasman Oyuncu GCA</th>
             <th>{{ forloop.counter }}. Deplasman Oyuncu Passes Completed</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Passes Attempted</th>
+            <th>{{ forloop.counter }}. Deplasman Oyuncu Passes Attempted</th>>
             <th>{{ forloop.counter }}. Deplasman Oyuncu Pass Completion</th>
             <th>{{ forloop.counter }}. Deplasman Oyuncu Progressive Passes</th>
             <th>{{ forloop.counter }}. Deplasman Oyuncu Carries</th>
             <th>{{ forloop.counter }}. Deplasman Oyuncu Progressive Carries</th>
             <th>{{ forloop.counter }}. Deplasman Oyuncu Take-Ons Attempted</th>
             <th>{{ forloop.counter }}. Deplasman Oyuncu Successful Take Ons</th>
-          {% endfor %} 
+          {% endfor %}
         {% endif %}
       </tr>
     </thead>
@@ -196,7 +197,6 @@
         <td>{{ player.home_player_cmp_rate }}</td>
         <td>{{ player.home_player_prgp }}</td>
         <td>{{ player.home_player_carries }}</td>
-        <td>{{ player.home_player_prgc }}</td>
         <td>{{ player.home_player_att2 }}</td>
         <td>{{ player.home_player_succ }}</td>
         {% endfor %}
@@ -229,14 +229,13 @@
         <td>{{ player.away_player_cmp_rate }}</td>
         <td>{{ player.away_player_prgp }}</td>
         <td>{{ player.away_player_carries }}</td>
-        <td>{{ player.home_player_prgc }}</td>
         <td>{{ player.away_player_att2 }}</td>
         <td>{{ player.away_player_succ }}</td>
         {% endfor %}
       </tr>
       {% endfor %}
     </tbody>
-  </table>
+  </table> {% endcomment %}
 </div>
 <script>
   function updateDropdownAndInput(dropdownId, inputId, selectedText) {

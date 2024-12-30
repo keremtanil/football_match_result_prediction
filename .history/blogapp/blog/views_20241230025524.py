@@ -29,7 +29,7 @@ data ={
             "league": "None",
         }
     ],
-    "seasons": [{"season": f"{year}/{year+1}"} for year in range(datetime.now().year -1, 2016, -1)] + [{"season": "None"}],
+    "seasons": [{"season": f"{year}/{year+1}"} for year in range(datetime.now().year, 1999, -1)] + [{"season": "None"}],
 }
 def index(request):
     return render(request, "blog/index.html")
@@ -40,6 +40,10 @@ def collect_data(request):
     selected_season = request.GET.get('season', None)
 
     general = tb_general.objects.all()
+
+    print(selected_league)
+    print(selected_league)
+
 
     # Filtre uygula (dropdown seçimlerine göre)
     if selected_league and selected_league != "None":

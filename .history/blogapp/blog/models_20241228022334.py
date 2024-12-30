@@ -1,9 +1,7 @@
 from django.db import models
 
-class tb_general(models.Model):
-    match_ID = models.BigIntegerField()
-    league = models.CharField(max_length=100)
-    season = models.CharField(max_length=100)
+class tb_collect(models.Model):
+    match_ID = models.BigAutoField
     wk = models.CharField(max_length=100)
     day = models.CharField(max_length=100)
     date = models.CharField(max_length=100)
@@ -18,10 +16,10 @@ class tb_general(models.Model):
     referee = models.CharField(max_length=100)
 
     class Meta:
-        db_table = 'tb_general'
+        db_table = 'tb_collect'
 
-class tb_home(models.Model):
-    match_ID = models.ForeignKey(tb_general, on_delete=models.CASCADE, db_column='match_ID')
+class tb_homePlayers(models.Model):
+    match_ID = models.BigAutoField
     home_player_name = models.CharField(max_length=100)
     home_player_shirt_number = models.CharField(max_length=100)
     home_player_nation = models.CharField(max_length=100)
@@ -53,45 +51,5 @@ class tb_home(models.Model):
     home_player_prgc = models.CharField(max_length=100)
     home_player_att2 = models.CharField(max_length=100)
     home_player_succ = models.CharField(max_length=100)
-
-    class Meta:
-        db_table = 'tb_home'
-
-class tb_away(models.Model):
-    match_ID = models.ForeignKey(tb_general, on_delete=models.CASCADE, db_column='match_ID')
-    away_player_name = models.CharField(max_length=100)
-    away_player_shirt_number = models.CharField(max_length=100)
-    away_player_nation = models.CharField(max_length=100)
-    away_player_pos = models.CharField(max_length=100)
-    away_player_age = models.CharField(max_length=100)
-    away_player_min = models.CharField(max_length=100)
-    away_player_gls = models.CharField(max_length=100)
-    away_player_ast = models.CharField(max_length=100)
-    away_player_pk = models.CharField(max_length=100)
-    away_player_pkatt = models.CharField(max_length=100)
-    away_player_sh = models.CharField(max_length=100)
-    away_player_sot = models.CharField(max_length=100)
-    away_player_crdy = models.CharField(max_length=100)
-    away_player_crdr = models.CharField(max_length=100)
-    away_player_touches = models.CharField(max_length=100)
-    away_player_tkl = models.CharField(max_length=100)
-    away_player_int = models.CharField(max_length=100)
-    away_player_blocks = models.CharField(max_length=100)
-    away_player_xg = models.CharField(max_length=100)
-    away_player_npxg = models.CharField(max_length=100)
-    away_player_xag = models.CharField(max_length=100)
-    away_player_sca = models.CharField(max_length=100)
-    away_player_gca = models.CharField(max_length=100)
-    away_player_cmp = models.CharField(max_length=100)
-    away_player_att = models.CharField(max_length=100)
-    away_player_cmp_rate = models.CharField(max_length=100)
-    away_player_prgp = models.CharField(max_length=100)
-    away_player_carries = models.CharField(max_length=100)
-    away_player_prgc = models.CharField(max_length=100)
-    away_player_att2 = models.CharField(max_length=100)
-    away_player_succ = models.CharField(max_length=100)
-
-    class Meta:
-        db_table = 'tb_away'
 
 

@@ -2,8 +2,6 @@ from django.db import models
 
 class tb_general(models.Model):
     match_ID = models.BigIntegerField()
-    league = models.CharField(max_length=100)
-    season = models.CharField(max_length=100)
     wk = models.CharField(max_length=100)
     day = models.CharField(max_length=100)
     date = models.CharField(max_length=100)
@@ -21,7 +19,7 @@ class tb_general(models.Model):
         db_table = 'tb_general'
 
 class tb_home(models.Model):
-    match_ID = models.ForeignKey(tb_general, on_delete=models.CASCADE, db_column='match_ID')
+    match_ID = models.BigIntegerField()
     home_player_name = models.CharField(max_length=100)
     home_player_shirt_number = models.CharField(max_length=100)
     home_player_nation = models.CharField(max_length=100)
@@ -58,7 +56,7 @@ class tb_home(models.Model):
         db_table = 'tb_home'
 
 class tb_away(models.Model):
-    match_ID = models.ForeignKey(tb_general, on_delete=models.CASCADE, db_column='match_ID')
+    match_ID = models.BigIntegerField()
     away_player_name = models.CharField(max_length=100)
     away_player_shirt_number = models.CharField(max_length=100)
     away_player_nation = models.CharField(max_length=100)

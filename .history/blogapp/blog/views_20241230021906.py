@@ -8,28 +8,28 @@ from blog.models import tb_away
 data ={
     "leagues":[
         {
-            "league": "TUR-m",
+            "league": "Turkey",
         },
         {
-            "league": "ENG-m",
+            "league": "Premier League",
         },
         {
-            "league": "GER-m",
+            "league": "Germany",
         },
         {
-            "league": "ITA-m",
+            "league": "Italy",
         },
         {
-            "league": "ESP-m",
+            "league": "Spain",
         },
         {
-            "league": "FRA-m",
+            "league": "France",
         },
         {
             "league": "None",
         }
     ],
-    "seasons": [{"season": f"{year}/{year+1}"} for year in range(datetime.now().year -1, 2016, -1)] + [{"season": "None"}],
+    "seasons": [{"season": f"{year}/{year+1}"} for year in range(datetime.now().year, 1999, -1)] + [{"season": "None"}],
 }
 def index(request):
     return render(request, "blog/index.html")
@@ -50,12 +50,12 @@ def collect_data(request):
         general = general.filter(season=season_year)
 
     # Dinamik olarak oyuncu bilgilerini getirin
-    merged_data = []
+    data = []
     for match in general:
         home_players = tb_home.objects.filter(match_ID=match.match_ID)
         away_players = tb_away.objects.filter(match_ID=match.match_ID)
 
-        merged_data.append({
+        data.append({
             "match": match,
             "home_players": list(home_players),
             "away_players": list(away_players),
@@ -63,7 +63,7 @@ def collect_data(request):
     context = {
         "leagues": data["leagues"],
         "seasons": data["seasons"],
-        "merged_data": merged_data,
+        "data": data,
         "selected_league": selected_league if selected_league != "None" else None,
         "selected_season": selected_season if selected_season != "None" else None,
     }

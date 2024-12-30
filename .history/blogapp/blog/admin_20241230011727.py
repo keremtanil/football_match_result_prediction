@@ -9,13 +9,13 @@ class TbGeneralAdmin(admin.ModelAdmin):
 
 @admin.register(tb_home)
 class TbHomeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'match_ID', 'home_player_name')  # ForeignKey'i ve diğer alanları görüntüleyin
+    list_display = ('id', 'match_ID', 'player_name')  # ForeignKey'i ve diğer alanları görüntüleyin
     list_filter = ('match_ID', )  # Filtreleme için kullanabilirsiniz
-    search_fields = ('home_player_name', )  # Arama alanı ekleyebilirsiniz
+    search_fields = ('player_name', )  # Arama alanı ekleyebilirsiniz
 
 @admin.register(tb_away)
 class TbAwayAdmin(admin.ModelAdmin):
-    list_display = ('id', 'match_ID', 'away_player_name')
+    list_display = ('id', 'match_ID', 'player_name')
     list_filter = ('match_ID', )
-    search_fields = ('away_player_name', )
+    search_fields = ('player_name', )
 

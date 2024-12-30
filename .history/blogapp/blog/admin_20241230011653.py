@@ -3,19 +3,23 @@ from import_export.admin import ImportExportModelAdmin
 from .models import tb_general
 from .models import tb_home
 from .models import tb_away
-@admin.register(tb_general)
+
+from django.contrib import admin
+from .models import TbGeneral, TbHome, TbAway
+
+@admin.register(TbGeneral)
 class TbGeneralAdmin(admin.ModelAdmin):
     list_display = ('match_ID', )  # Görüntülenecek sütunları ekleyin
 
-@admin.register(tb_home)
+@admin.register(TbHome)
 class TbHomeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'match_ID', 'home_player_name')  # ForeignKey'i ve diğer alanları görüntüleyin
+    list_display = ('id', 'match_ID', 'player_name')  # ForeignKey'i ve diğer alanları görüntüleyin
     list_filter = ('match_ID', )  # Filtreleme için kullanabilirsiniz
-    search_fields = ('home_player_name', )  # Arama alanı ekleyebilirsiniz
+    search_fields = ('player_name', )  # Arama alanı ekleyebilirsiniz
 
-@admin.register(tb_away)
+@admin.register(TbAway)
 class TbAwayAdmin(admin.ModelAdmin):
-    list_display = ('id', 'match_ID', 'away_player_name')
+    list_display = ('id', 'match_ID', 'player_name')
     list_filter = ('match_ID', )
-    search_fields = ('away_player_name', )
+    search_fields = ('player_name', )
 
