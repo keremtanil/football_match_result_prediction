@@ -16,11 +16,11 @@ driver.get(main_url)
 wait = WebDriverWait(driver, 10)
 driver.maximize_window()
 
-# CSV dosyası oluştur ve başlıkları yaz
+
 output_file = "home_data.csv"
 with open(output_file, mode="w", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
-    writer.writerow([])# Başlık satırı
+    writer.writerow([])
 
 output_file_1 = "away_data.csv"
 with open(output_file_1, mode="w", newline="", encoding="utf-8") as file_1:
@@ -75,8 +75,8 @@ def scraping(league):
                 
             for row in rows[:1]:
                 row_data = []
-                #row_data.append(league)
-                #row_data.append(initial_year)
+                row_data.append(league)
+                row_data.append(initial_year)
                 
                 cells = row.find_elements(By.XPATH, ".//*[@class='right ' or @class='left ' or @class='center ' or @class='left sort_show' or @class='right sort_show' or @class='right iz']")
                 for cell in cells:
@@ -93,7 +93,7 @@ def scraping(league):
                     with open(output_file_2, mode="a", newline="", encoding="utf-8") as file_2:
                         writer = csv.writer(file_2)
                         writer.writerow(match_data)  # Her satırı anında yaz         
-                    print("mac verileri yazdirildi.")
+                    print("Genel maç verileri yazıldı.")
                     genel_id += 1
 
             # Sayfayı aşağı kaydır ve match_report elementlerini bul
@@ -102,9 +102,9 @@ def scraping(league):
                 try:
                     print(f"{index}. elemente tıklanıyor...")
                     driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
-                    time.sleep(1)  # Kaydırma sonrası kısa bir bekleme
+                    time.sleep(2)  
                     driver.execute_script("arguments[0].click();", element)
-                    time.sleep(3)  # Tıklama sonrası bekleme
+                    time.sleep(3)  
 
                     #league_info = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#content > div:nth-child(2) > a"))).text.strip()
                     
@@ -129,6 +129,7 @@ def scraping(league):
                                     row_data.append(cell_text)
                             match_data = [match_id] + row_data  # Her oyuncu için ayrı satır
                             writer.writerow(match_data)
+                    print("Ev sahibi takım istatistikleri yazıldı.")
 
                     if len(tables) >= 8:
                         print("Tablolar başarıyla alındı!")
@@ -139,7 +140,7 @@ def scraping(league):
                         with open(output_file_1, mode="a", newline="", encoding="utf-8") as file_1:
                             writer = csv.writer(file_1)
                             for row in away_rows[:len(home_rows)-1]:
-                                cells = row.find_elements(By.CSS_SELECTOR, "td, th")  # Başlık satırını atla ve ilk 11 oyuncuyu al
+                                cells = row.find_elements(By.CSS_SELECTOR, "td, th") 
                                 row_data = []
                                 for cell in cells:
                                     cell_text = cell.text.strip()
@@ -152,7 +153,7 @@ def scraping(league):
                                 match_data = [match_id] + row_data  # Her oyuncu için ayrı satır
                                 writer.writerow(match_data)
 
-                        print("Ev sahibi takım istatistikleri yazıldı.")
+                        print("Deplasman takım istatistikleri yazıldı.")
 
                     elif len(tables) >= 4:
                         print("Tablolar başarıyla alındı!")
@@ -162,8 +163,8 @@ def scraping(league):
                         #away_players = []
                         with open(output_file_1, mode="a", newline="", encoding="utf-8") as file_1:
                             writer = csv.writer(file_1)
-                            for row in away_rows[:len(home_rows)-1]:  # Başlık satırını atla ve ilk 11 oyuncuyu al
-                                cells = row.find_elements(By.CSS_SELECTOR, "td, th")  # Başlık satırını atla ve ilk 11 oyuncuyu al
+                            for row in away_rows[:len(home_rows)-1]:  
+                                cells = row.find_elements(By.CSS_SELECTOR, "td, th")  
                                 row_data = []
                                 for cell in cells:
                                     cell_text = cell.text.strip()
@@ -176,12 +177,12 @@ def scraping(league):
                                 match_data = [match_id] + row_data  # Her oyuncu için ayrı satır
                                 writer.writerow(match_data)
 
-                        print("Ev sahibi takım istatistikleri yazıldı.")
+                        print("Deplasman takım istatistikleri yazıldı.")
                     else:
                         print("Yeterli sayıda tablo bulunamadı.")
 
                     driver.back()  # Geri dön
-                    time.sleep(2)  # Sayfa yüklenmesini bekle
+                    time.sleep(3)  
 
                     match_id += 1
 
