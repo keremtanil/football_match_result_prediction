@@ -1,0 +1,13 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}"> 
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <button type="button" class="btn btn-primary btn-custom mx-2" onclick="location.href='{% url 'collect' %}'">Veri Çek</button>
+    <button type="button" class="btn btn-secondary btn-custom mx-2" onclick="location.href='{% url 'predict' %}'">Tahmin Et</button>
+    <button type="button" class="btn btn-secondary btn-custom mx-2" onclick="location.href='{% url 'live' %}'">Tahmin Et</button>
+</div>
+{% endblock %}

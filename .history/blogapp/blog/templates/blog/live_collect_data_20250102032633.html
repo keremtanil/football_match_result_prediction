@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Header Section -->
+    <h2 class="text-center mb-4">Veri Çekme</h2>
+    <!-- Form Başlangıcı -->
+    <form method="GET" action="{% url 'live_collect_data' %}">
+        <!-- Dropdown and Button Section -->
+        <div class="row justify-content-center mb-4">
+            <!-- First Dropdown -->
+            <div class="col-md-3 mb-3 mb-md-0">
+                <div class="dropdown">
+                    <button id="leagueDropdown" class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ selected_league|default:"Lig Seçiniz" }}
+                    </button>
+                    <ul class="dropdown-menu w-100">
+                        {% for league in leagues %}
+                        <li>
+                            <a class="dropdown-item" href="#" onclick="updateDropdownAndInput('leagueDropdown', 'leagueInput', '{{ league.league }}')">
+                                {{ league.league }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <input type="hidden" id="leagueInput" name="league" value="{{ selected_league|default:'' }}">
+                </div>
+            </div>
+
+            <!-- Second Dropdown -->
+            <div class="col-md-3 mb-3 mb-md-0">
+                <div class="dropdown">
+                    <button id="seasonDropdown" class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ selected_season|default:"Sezon Seçiniz" }}
+                    </button>
+                    <ul class="dropdown-menu w-100">
+                        {% for season in seasons %}
+                        <li>
+                            <a class="dropdown-item" href="#" onclick="updateDropdownAndInput('seasonDropdown', 'seasonInput', '{{ season.season }}')">
+                                {{ season.season }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <input type="hidden" id="seasonInput" name="season" value="{{ selected_season|default:'' }}">
+                </div>
+            </div>
+
+            <!-- Tarih Alanı (Date Picker) -->
+            <div class="col-md-3 mb-3 mb-md-0">
+                <div class="input-group">
+                    {{ form.match_date.as_widget }} <!-- Formdaki takvim alanı -->
+                </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="col-md-3 mb-3 mb-md-0">
+                <button type="submit" class="btn btn-success w-100">Veri Çek</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    function updateDropdownAndInput(dropdownId, inputId, selectedText) {
+      // Dropdown butonunun üzerindeki metni değiştir
+      document.getElementById(dropdownId).textContent = selectedText;
+      // İlgili gizli input'un değerini seçilen metinle güncelle
+      document.getElementById(inputId).value = selectedText || '';  // Eğer seçilmezse boş string
+  }
+</script>
+{% endblock %}

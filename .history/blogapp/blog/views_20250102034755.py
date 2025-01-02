@@ -79,12 +79,12 @@ def collect_data(request):
     return render(request, "blog/collect_data.html", context)
 
 def live_collect_data(request):
-    form = DateField(request.GET)  # Formu request.GET ile alıyoruz
-    if form.is_valid():
-        selected_date = form.cleaned_data['match_date']
-        selected_league = request.GET.get('league')
-        selected_season = request.GET.get('season')
-
+    form = DateField(request.GET or None)
+    # Dropdown seçimlerini al
+    selected_league = request.GET.get('league', None)
+    selected_season = request.GET.get('season', None)
+    # Takvimden seçilen tarihi al
+    selected_date = request.GET.get('date', None)
     print("deneme")
     print(selected_date)
     selected_date = str(selected_date)

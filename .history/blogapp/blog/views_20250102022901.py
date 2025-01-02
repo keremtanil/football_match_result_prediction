@@ -79,17 +79,25 @@ def collect_data(request):
     return render(request, "blog/collect_data.html", context)
 
 def live_collect_data(request):
-    form = DateField(request.GET)  # Formu request.GET ile alıyoruz
-    if form.is_valid():
-        selected_date = form.cleaned_data['match_date']
-        selected_league = request.GET.get('league')
-        selected_season = request.GET.get('season')
+    form = DateField(request.GET or None)
+    # Dropdown seçimlerini al
+    selected_league = request.GET.get('league', None)
+    selected_season = request.GET.get('season', None)
+    # Takvimden seçilen tarihi al
+    selected_date = request.GET.get('match_date', None)
 
-    print("deneme")
-    print(selected_date)
-    selected_date = str(selected_date)
-    # 2. gg/aa/yy formatını datetime nesnesine çevir
-    formatted_date = datetime.datetime.strptime(selected_date, "%Y-%m-%d")
+    # Seçili tarih yoksa hata döndür
+    if not selected_date:
+        return HttpResponse("Hata: Tarih seçilmedi!")
+
+    # Tarihi datetime nesnesine çevir
+    try:
+        date_obj = datetime.datetime.strptime(selected_date, "%d/%m/%y")
+    except ValueError:
+        return HttpResponse("Hata: Geçersiz tarih formatı!")
+
+    # 3. yy-aa-gg formatında stringe dönüştür
+    formatted_date = date_obj.strftime("%y-%m-%d")
 
     driver_path = "/usr/local/bin/chromedriver"
 

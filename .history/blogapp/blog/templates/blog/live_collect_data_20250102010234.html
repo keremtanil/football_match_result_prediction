@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Header Section -->
+    <h2 class="text-center mb-4">Veri Filtreleme ve Görüntüleme</h2>
+    <!-- Form Başlangıcı -->
+    <form method="GET" action="{% url 'collect' %}">
+      <!-- Dropdown and Button Section -->
+      <div class="row justify-content-center mb-4">
+        <!-- First Dropdown -->
+        <div class="col-md-4 mb-3 mb-md-0">
+          <div class="dropdown">
+            <button id="leagueDropdown" class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ selected_league|default:"Lig Seçiniz" }}
+            </button>
+            <ul class="dropdown-menu w-100">
+              {% for league in leagues %}
+              <li>
+                <a class="dropdown-item" href="#" onclick="updateDropdownAndInput('leagueDropdown', 'leagueInput', '{{ league.league }}')">
+                  {{ league.league }}
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+            <!-- Gizli Input -->
+            <input type="hidden" id="leagueInput" name="league" value="{{ selected_league|default:'' }}">
+          </div>
+        </div>
+  
+        <!-- Second Dropdown -->
+        <div class="col-md-4 mb-3 mb-md-0">
+          <div class="dropdown">
+            <button id="seasonDropdown" class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ selected_season|default:"Sezon Seçiniz" }}
+            </button>
+            <ul class="dropdown-menu w-100">
+              {% for season in seasons %}
+              <li>
+                <a class="dropdown-item" href="#" onclick="updateDropdownAndInput('seasonDropdown', 'seasonInput', '{{ season.season }}')">
+                  {{ season.season }}
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+            <!-- Gizli Input -->
+            <input type="hidden" id="seasonInput" name="season" value="{{ selected_season|default:'' }}">
+          </div>
+        </div>
+        <!-- Tarih Seçici ve Submit Butonu -->
+        <div class="row justify-content-center align-items-center mt-3">
+            <!-- Tarih Seçici -->
+            <div class="col-md-4 mb-3">
+                <label for="datepicker" class="form-label">📅 Tarih Seç:</label>
+                <input type="text" class="form-control" id="datepicker" placeholder="Tarih Seçiniz">
+            </div>
+            <!-- Submit Butonu -->
+            <div class="col-md-4 mb-3">
+                <button type="submit" class="btn btn-success w-100 mt-4">Veri Çek</button>
+            </div>
+        </div>
+      </div>
+    </form>
+</div> <!-- .row -->
+<script>
+$(document).ready(function(){
+    $('#datepicker').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true
+    });
+});
+</script>
+{% endblock %}
