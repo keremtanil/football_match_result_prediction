@@ -67,85 +67,85 @@
     <thead class="table-dark">
       <tr>
         <th>#</th>
-        <th>Hafta</th>
-        <th>Gün</th>
-        <th>Tarih</th>
-        <th>Saat</th>
-        <th>Ev Sahibi Takım</th>
+        <th>Week</th>
+        <th>Day</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Home Team</th>
         <th>xG</th>
-        <th>Skor</th>
+        <th>Score</th>
         <th>xG</th>
-        <th>Deplasman Takım</th>
-        <th>Katılımcı Sayısı</th>
-        <th>Stadyum</th>
-        <th>Hakem</th>
+        <th>Away Team</th>
+        <th>Attendance</th>
+        <th>Venue</th>
+        <th>Referee</th>
         <!-- Dinamik olarak oyuncu sütunları -->
         {% if merged_data|length > 0 %}
           {% for i in merged_data.0.home_players %}
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu İsim</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Forma Numarası</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Uyruk</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Pozisyon</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Yaş</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Dakika</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Goals</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Assists</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Penalty Kicks Made</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Penalty Kicks Attempted</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Shots</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Shots on Target</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Sarı Kart</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Kırmızı Kart</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Touches</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Tackles</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Interceptions</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Blocks</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu xG</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu npxG</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu xAG</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu SCA</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu GCA</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Passes Completed</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Passes Attempted</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Pass Completion</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Progressive Passes</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Carries</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Progressive Carries</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Take-Ons Attempted</th>
-            <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Successful Take Ons</th>
+            <th>{{ forloop.counter }}. HP Name</th>
+            <th>{{ forloop.counter }}. HP Shirt Number</th>
+            <th>{{ forloop.counter }}. HP Nation</th>
+            <th>{{ forloop.counter }}. HP Pos</th>
+            <th>{{ forloop.counter }}. HP Age</th>
+            <th>{{ forloop.counter }}. HP Min</th>
+            <th>{{ forloop.counter }}. HP Gls</th>
+            <th>{{ forloop.counter }}. HP Ast</th>
+            <th>{{ forloop.counter }}. HP PK</th>
+            <th>{{ forloop.counter }}. HP PKatt</th>
+            <th>{{ forloop.counter }}. HP Sh</th>
+            <th>{{ forloop.counter }}. HP SoT</th>
+            <th>{{ forloop.counter }}. HP CrdY</th>
+            <th>{{ forloop.counter }}. HP CrdR</th>
+            <th>{{ forloop.counter }}. HP Touches</th>
+            <th>{{ forloop.counter }}. HP Tkl</th>
+            <th>{{ forloop.counter }}. HP Int</th>
+            <th>{{ forloop.counter }}. HP Blocks</th>
+            <th>{{ forloop.counter }}. HP xG</th>
+            <th>{{ forloop.counter }}. HP npxG</th>
+            <th>{{ forloop.counter }}. HP xAG</th>
+            <th>{{ forloop.counter }}. HP SCA</th>
+            <th>{{ forloop.counter }}. HP GCA</th>
+            <th>{{ forloop.counter }}. HP Cmp</th>
+            <th>{{ forloop.counter }}. HP Passes Att</th>
+            <th>{{ forloop.counter }}. HP Cmp%</th>
+            <th>{{ forloop.counter }}. HP PrgP</th>
+            <th>{{ forloop.counter }}. HP Carries</th>
+            <th>{{ forloop.counter }}. HP PrgC</th>
+            <th>{{ forloop.counter }}. HP T-O Att</th>
+            <th>{{ forloop.counter }}. HP T-O Succ</th>
           {% endfor %}
           {% for i in merged_data.0.away_players %}
-            <th>{{ forloop.counter }}. Deplasman Oyuncu İsim</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Forma Numarası</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Uyruk</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Pozisyon</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Yaş</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Dakika</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Goals</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Assists</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Penalty Kicks Made</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Penalty Kicks Attempted</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Shots</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Shots on Target</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Sarı Kart</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Kırmızı Kart</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Touches</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Tackles</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Interceptions</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Blocks</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu xG</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu npxG</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu xAG</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu SCA</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu GCA</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Passes Completed</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Passes Attempted</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Pass Completion</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Progressive Passes</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Carries</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Progressive Carries</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Take-Ons Attempted</th>
-            <th>{{ forloop.counter }}. Deplasman Oyuncu Successful Take Ons</th>
+            <th>{{ forloop.counter }}. AP Name</th>
+            <th>{{ forloop.counter }}. AP Shirt Number</th>
+            <th>{{ forloop.counter }}. AP Nation</th>
+            <th>{{ forloop.counter }}. AP Pos</th>
+            <th>{{ forloop.counter }}. AP Age</th>
+            <th>{{ forloop.counter }}. AP Min</th>
+            <th>{{ forloop.counter }}. AP Gls</th>
+            <th>{{ forloop.counter }}. AP Ast</th>
+            <th>{{ forloop.counter }}. AP PK</th>
+            <th>{{ forloop.counter }}. AP PKatt</th>
+            <th>{{ forloop.counter }}. AP Sh</th>
+            <th>{{ forloop.counter }}. AP SoT</th>
+            <th>{{ forloop.counter }}. AP CrdY</th>
+            <th>{{ forloop.counter }}. AP CrdR</th>
+            <th>{{ forloop.counter }}. AP Touches</th>
+            <th>{{ forloop.counter }}. AP Tkl</th>
+            <th>{{ forloop.counter }}. AP Int</th>
+            <th>{{ forloop.counter }}. AP Blocks</th>
+            <th>{{ forloop.counter }}. AP xG</th>
+            <th>{{ forloop.counter }}. AP npxG</th>
+            <th>{{ forloop.counter }}. AP xAG</th>
+            <th>{{ forloop.counter }}. AP SCA</th>
+            <th>{{ forloop.counter }}. AP GCA</th>
+            <th>{{ forloop.counter }}. AP Cmp</th>
+            <th>{{ forloop.counter }}. AP Passes Att</th>
+            <th>{{ forloop.counter }}. AP Cmp%</th>
+            <th>{{ forloop.counter }}. AP PrgP</th>
+            <th>{{ forloop.counter }}. AP Carries</th>
+            <th>{{ forloop.counter }}. AP PrgC</th>
+            <th>{{ forloop.counter }}. AP T-O Att</th>
+            <th>{{ forloop.counter }}. AP T-O Succ</th>
           {% endfor %} 
         {% endif %}
       </tr>
