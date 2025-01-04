@@ -1,0 +1,53 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}"> 
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <form>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="lig">Lig Adı</label>
+                <input type="text" id="lig" class="form-control" placeholder="Lig adı giriniz">
+            </div>
+            <div class="form-group">
+                <label for="sezon">Sezon</label>
+                <input type="text" id="sezon" class="form-control" placeholder="Sezon giriniz">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="tarih">Tarih</label>
+                <input type="date" id="tarih" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="ev-sahibi">Ev Sahibi Takım</label>
+                <input type="text" id="ev-sahibi" class="form-control" placeholder="Ev sahibi takım giriniz">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="deplasman">Deplasman Takım</label>
+                <input type="text" id="deplasman" class="form-control" placeholder="Deplasman takım giriniz">
+            </div>
+            <div class="form-group">
+                <label for="hakem">Hakem Adı</label>
+                <input type="text" id="hakem" class="form-control" placeholder="Hakem adı giriniz">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="seyirci">Seyirci Sayısı</label>
+                <input type="number" id="seyirci" class="form-control" placeholder="Seyirci sayısı giriniz">
+            </div>
+        </div>
+
+        <button type="submit" class="btn-success submit-btn ">Tahmin Et</button>
+    </form>
+</div>
+{% endblock %}

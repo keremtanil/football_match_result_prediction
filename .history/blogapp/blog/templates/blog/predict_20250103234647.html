@@ -1,0 +1,41 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}"> 
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <form>
+        <div class="mb-3">
+            <label for="leagueName" class="form-label">Lig Adı</label>
+            <input type="text" class="form-control" id="leagueName" placeholder="Lig adı giriniz">
+        </div>
+        <div class="mb-3">
+            <label for="season" class="form-label">Sezon</label>
+            <input type="text" class="form-control" id="season" placeholder="Sezon giriniz">
+        </div>
+        <div class="mb-3">
+            <label for="date" class="form-label">Tarih</label>
+            <input type="date" class="form-control" id="date" placeholder="Tarih giriniz">
+        </div>
+        <div class="mb-3">
+            <label for="homeTeam" class="form-label">Ev Sahibi Takım</label>
+            <input type="text" class="form-control" id="homeTeam" placeholder="Ev sahibi takım giriniz">
+        </div>
+        <div class="mb-3">
+            <label for="awayTeam" class="form-label">Deplasman Takım</label>
+            <input type="text" class="form-control" id="awayTeam" placeholder="Deplasman takım giriniz">
+        </div>
+        <div class="mb-3">
+            <label for="referee" class="form-label">Hakem Adı</label>
+            <input type="text" class="form-control" id="referee" placeholder="Hakem adı giriniz">
+        </div>
+        <div class="mb-3">
+            <label for="audience" class="form-label">Seyirci Sayısı</label>
+            <input type="number" class="form-control" id="audience" placeholder="Seyirci sayısı giriniz">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Tahmin Et</button>
+    </form>
+</div>
+{% endblock %}

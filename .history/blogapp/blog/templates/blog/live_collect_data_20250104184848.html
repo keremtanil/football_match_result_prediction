@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Header Section -->
+    <h2 class="text-center mb-4">Veri Çekme</h2>
+    <!-- Form Başlangıcı -->
+    <form method="GET" action="{% url 'live' %}">
+        <!-- Dropdown and Button Section -->
+        <div class="row justify-content-center mb-4">
+            <!-- First Dropdown -->
+            <div class="col-md-3 mb-3 mb-md-0">
+                <div class="dropdown">
+                    <button id="leagueDropdown" class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ selected_league|default:"Lig Seçiniz" }}
+                    </button>
+                    <ul class="dropdown-menu w-100">
+                        {% for league in leagues %}
+                        <li>
+                            <a class="dropdown-item" href="#" onclick="updateDropdownAndInput('leagueDropdown', 'leagueInput', '{{ league.league }}')">
+                                {{ league.league }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <input type="hidden" id="leagueInput" name="league" value="{{ selected_league|default:'' }}">
+                </div>
+            </div>
+
+            <!-- Second Dropdown -->
+            <div class="col-md-3 mb-3 mb-md-0">
+                <div class="dropdown">
+                    <button id="seasonDropdown" class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ selected_season|default:"Sezon Seçiniz" }}
+                    </button>
+                    <ul class="dropdown-menu w-100">
+                        {% for season in seasons %}
+                        <li>
+                            <a class="dropdown-item" href="#" onclick="updateDropdownAndInput('seasonDropdown', 'seasonInput', '{{ season.season }}')">
+                                {{ season.season }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <input type="hidden" id="seasonInput" name="season" value="{{ selected_season|default:'' }}">
+                </div>
+            </div>
+
+            <!-- Tarih Alanı (Date Picker) -->
+            <div class="col-md-3 mb-3 mb-md-0">
+                <div class="input-group">
+                    {{ form.match_date }} <!-- Formdaki takvim alanı -->
+                </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="col-md-3 mb-3 mb-md-0">
+                <button type="submit" class="btn btn-success w-100 btn-custom2">Veri Çek</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Table Section -->
+<div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+    <table class="table table-bordered table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Hafta</th>
+          <th>Gün</th>
+          <th>Tarih</th>
+          <th>Saat</th>
+          <th>Ev Sahibi Takım</th>
+          <th>xG</th>
+          <th>Skor</th>
+          <th>xG</th>
+          <th>Deplasman Takım</th>
+          <th>Katılımcı Sayısı</th>
+          <th>Stadyum</th>
+          <th>Hakem</th>
+          <!-- Dinamik olarak oyuncu sütunları -->
+          {% if merged_data|length > 0 %}
+            {% for i in merged_data.0.home_players %}
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu İsim</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Forma Numarası</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Uyruk</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Pozisyon</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Yaş</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Dakika</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Goals</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Assists</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Penalty Kicks Made</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Penalty Kicks Attempted</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Shots</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Shots on Target</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Sarı Kart</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Kırmızı Kart</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Touches</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Tackles</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Interceptions</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Blocks</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu xG</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu npxG</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu xAG</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu SCA</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu GCA</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Passes Completed</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Passes Attempted</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Pass Completion</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Progressive Passes</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Carries</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Progressive Carries</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Take-Ons Attempted</th>
+              <th>{{ forloop.counter }}. Ev Sahibi Oyuncu Successful Take Ons</th>
+            {% endfor %}
+            {% for i in merged_data.0.away_players %}
+              <th>{{ forloop.counter }}. Deplasman Oyuncu İsim</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Forma Numarası</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Uyruk</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Pozisyon</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Yaş</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Dakika</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Goals</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Assists</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Penalty Kicks Made</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Penalty Kicks Attempted</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Shots</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Shots on Target</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Sarı Kart</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Kırmızı Kart</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Touches</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Tackles</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Interceptions</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Blocks</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu xG</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu npxG</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu xAG</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu SCA</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu GCA</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Passes Completed</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Passes Attempted</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Pass Completion</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Progressive Passes</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Carries</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Progressive Carries</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Take-Ons Attempted</th>
+              <th>{{ forloop.counter }}. Deplasman Oyuncu Successful Take Ons</th>
+            {% endfor %} 
+          {% endif %}
+        </tr>
+      </thead>
+      {% comment %} <tbody>
+        {% for data in merged_data %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ data.match[0] }}</td>
+          <td>{{ data.match[2] }}</td>
+          <td>{{ data.match[2] }}</td>
+          <td>{{ data.match[2]}}</td>
+          <td>{{ data.match[2] }}</td>
+          <td>{{ data.match[2] }}</td>
+          <td>{{ data.match[2] }}</td>
+          <td>{{ data.match[2] }}</td>
+          <td>{{ data.match[2] }}</td>
+          <td>{{ data.match[2] }}</td>
+          <td>{{ data.match[2] }}</td>
+          <td>{{ data.match[2] }}</td> {% endcomment %}
+          <!-- Futbolcu bilgilerini sütun sütun yazdırıyoruz -->
+          {% comment %} {% for player in data.home_players %}
+          <td>{{ player.home_player_name }}</td>
+          <td>{{ player.home_player_shirt_number }}</td>
+          <td>{{ player.home_player_nation }}</td>
+          <td>{{ player.home_player_pos }}</td>
+          <td>{{ player.home_player_age }}</td>
+          <td>{{ player.home_player_min }}</td>
+          <td>{{ player.home_player_gls }}</td>
+          <td>{{ player.home_player_ast }}</td>
+          <td>{{ player.home_player_pk }}</td>
+          <td>{{ player.home_player_pkatt }}</td>
+          <td>{{ player.home_player_sh }}</td>
+          <td>{{ player.home_player_sot }}</td>
+          <td>{{ player.home_player_crdy }}</td>
+          <td>{{ player.home_player_crdr }}</td>
+          <td>{{ player.home_player_touches }}</td>
+          <td>{{ player.home_player_tkl }}</td>
+          <td>{{ player.home_player_int }}</td>
+          <td>{{ player.home_player_blocks }}</td>
+          <td>{{ player.home_player_xg }}</td>
+          <td>{{ player.home_player_npxg }}</td>
+          <td>{{ player.home_player_xag }}</td>
+          <td>{{ player.home_player_sca }}</td>
+          <td>{{ player.home_player_gca }}</td>
+          <td>{{ player.home_player_cmp }}</td>
+          <td>{{ player.home_player_att }}</td>
+          <td>{{ player.home_player_cmp_rate }}</td>
+          <td>{{ player.home_player_prgp }}</td>
+          <td>{{ player.home_player_carries }}</td>
+          <td>{{ player.home_player_prgc }}</td>
+          <td>{{ player.home_player_att2 }}</td>
+          <td>{{ player.home_player_succ }}</td>
+          {% endfor %}
+          {% for player in data.away_players %}
+          <td>{{ player.away_player_name }}</td>
+          <td>{{ player.away_player_shirt_number }}</td>
+          <td>{{ player.away_player_nation }}</td>
+          <td>{{ player.away_player_pos }}</td>
+          <td>{{ player.away_player_age }}</td>
+          <td>{{ player.away_player_min }}</td>
+          <td>{{ player.away_player_gls }}</td>
+          <td>{{ player.away_player_ast }}</td>
+          <td>{{ player.away_player_pk }}</td>
+          <td>{{ player.away_player_pkatt }}</td>
+          <td>{{ player.away_player_sh }}</td>
+          <td>{{ player.away_player_sot }}</td>
+          <td>{{ player.away_player_crdy }}</td>
+          <td>{{ player.away_player_crdr }}</td>
+          <td>{{ player.away_player_touches }}</td>
+          <td>{{ player.away_player_tkl }}</td>
+          <td>{{ player.away_player_int }}</td>
+          <td>{{ player.away_player_blocks }}</td>
+          <td>{{ player.away_player_xg }}</td>
+          <td>{{ player.away_player_npxg }}</td>
+          <td>{{ player.away_player_xag }}</td>
+          <td>{{ player.away_player_sca }}</td>
+          <td>{{ player.away_player_gca }}</td>
+          <td>{{ player.away_player_cmp }}</td>
+          <td>{{ player.away_player_att }}</td>
+          <td>{{ player.away_player_cmp_rate }}</td>
+          <td>{{ player.away_player_prgp }}</td>
+          <td>{{ player.away_player_carries }}</td>
+          <td>{{ player.home_player_prgc }}</td>
+          <td>{{ player.away_player_att2 }}</td>
+          <td>{{ player.away_player_succ }}</td>
+          {% endfor %} {% endcomment %}
+        {% comment %} </tr>
+        {% endfor %}
+      </tbody> {% endcomment %}
+    </table>
+  </div>
+<script>
+    function updateDropdownAndInput(dropdownId, inputId, selectedText) {
+      // Dropdown butonunun üzerindeki metni değiştir
+      document.getElementById(dropdownId).textContent = selectedText;
+      // İlgili gizli input'un değerini seçilen metinle güncelle
+      document.getElementById(inputId).value = selectedText || '';  // Eğer seçilmezse boş string
+  }
+</script>
+{% endblock %}
