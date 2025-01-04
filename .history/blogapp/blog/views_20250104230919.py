@@ -16,7 +16,7 @@ import time
 
 data ={
     "leagues":[{"league": "Super Lig",},{"league": "Premier League",},{"league": "Bundesliga",},{"league": "Serie A",},{"league": "La Liga",},{"league": "Ligue 1",},{"league": "None",}],
-    "seasons": [{"season": f"{year}-{year+1}"} for year in range(datetime.datetime.now().year -2, 2016, -1)] + [{"season": "None"}],
+    "seasons": [{"season": f"{year}-{year+1}"} for year in range(datetime.datetime.now().year -1, 2016, -1)] + [{"season": "None"}],
 }
 league_data = {
 "Premier League": {"id": "9", "slug": "Premier-League-Scores-and-Fixtures"},

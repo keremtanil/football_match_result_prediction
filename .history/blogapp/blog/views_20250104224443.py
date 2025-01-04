@@ -15,8 +15,8 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 data ={
-    "leagues":[{"league": "Super Lig",},{"league": "Premier League",},{"league": "Bundesliga",},{"league": "Serie A",},{"league": "La Liga",},{"league": "Ligue 1",},{"league": "None",}],
-    "seasons": [{"season": f"{year}-{year+1}"} for year in range(datetime.datetime.now().year -2, 2016, -1)] + [{"season": "None"}],
+    "leagues":[{"league": "TUR-m",},{"league": "Premier League",},{"league": "GER-m",},{"league": "ITA-m",},{"league": "ESP-m",},{"league": "FRA-m",},{"league": "None",}],
+    "seasons": [{"season": f"{year}-{year+1}"} for year in range(datetime.datetime.now().year -1, 2016, -1)] + [{"season": "None"}],
 }
 league_data = {
 "Premier League": {"id": "9", "slug": "Premier-League-Scores-and-Fixtures"},
@@ -30,20 +30,18 @@ def index(request):
     return render(request, "blog/index.html")
 
 def collect_data(request):
-    league = {"Premier League":"ENG-m","Ligue 1":"FRA-m","Bundesliga":"GER-m","Serie A":"ITA-m","La Liga":"ESP-m","Super Lig":"TUR-m","None":"None"}
     # Dropdown seçimlerini al
-    selected_league_first = request.GET.get('league', None)
-    selected_league = league.get(selected_league_first, None)
+    selected_league = request.GET.get('league', None)
     selected_season = request.GET.get('season', None)
 
     general = tb_general.objects.all()
 
     # Filtre uygula (dropdown seçimlerine göre)
-    if selected_league_first and selected_league_first != "None":
+    if selected_league and selected_league != "None":
         general = general.filter(league=selected_league)  # Eğer "league" modelde varsa
 
     if selected_season and selected_season != "None":
-        season_year = selected_season.split('-')[0]
+        season_year = selected_season.split('/')[0]
         general = general.filter(season=season_year)
 
     # Dinamik olarak oyuncu bilgilerini getirin
@@ -61,7 +59,7 @@ def collect_data(request):
         "leagues": data["leagues"],
         "seasons": data["seasons"],
         "merged_data": merged_data,
-        "selected_league": selected_league_first if selected_league_first != "None" else None,
+        "selected_league": selected_league if selected_league != "None" else None,
         "selected_season": selected_season if selected_season != "None" else None,
     }
     return render(request, "blog/collect_data.html", context)

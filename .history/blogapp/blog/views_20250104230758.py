@@ -16,7 +16,7 @@ import time
 
 data ={
     "leagues":[{"league": "Super Lig",},{"league": "Premier League",},{"league": "Bundesliga",},{"league": "Serie A",},{"league": "La Liga",},{"league": "Ligue 1",},{"league": "None",}],
-    "seasons": [{"season": f"{year}-{year+1}"} for year in range(datetime.datetime.now().year -2, 2016, -1)] + [{"season": "None"}],
+    "seasons": [{"season": f"{year}-{year+1}"} for year in range(datetime.datetime.now().year -1, 2016, -1)] + [{"season": "None"}],
 }
 league_data = {
 "Premier League": {"id": "9", "slug": "Premier-League-Scores-and-Fixtures"},
@@ -39,11 +39,11 @@ def collect_data(request):
     general = tb_general.objects.all()
 
     # Filtre uygula (dropdown seçimlerine göre)
-    if selected_league_first and selected_league_first != "None":
+    if selected_league and selected_league != "None":
         general = general.filter(league=selected_league)  # Eğer "league" modelde varsa
 
     if selected_season and selected_season != "None":
-        season_year = selected_season.split('-')[0]
+        season_year = selected_season.split('/')[0]
         general = general.filter(season=season_year)
 
     # Dinamik olarak oyuncu bilgilerini getirin
