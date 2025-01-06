@@ -106,18 +106,18 @@ input[type="date"].form-control:focus {
 .btn-close {
   color: #6c757d; /* Buton rengi */
 }
-.field-error {
-  color: #dc3545; /* Kırmızı renk */
-  font-size: 14px; /* Küçük yazı */
-  margin-top: 5px; /* Dropdown ile hata mesajı arasında boşluk */
-  display: flex;
-  align-items: center;
-  gap: 5px;
+.alert.error {
+  background-color: #f8d7da; /* Kırmızımsı arka plan */
+  border: 1px solid #f5c6cb; /* Kırmızı tonunda kenarlık */
+  color: #721c24; /* Koyu kırmızı yazı rengi */
 }
 
-.field-error i {
-  color: #dc3545; /* İkon rengi */
-  font-size: 16px; /* İkon boyutu */
+.alert.error .alert-text {
+  color: #721c24; /* Hata mesajı yazı rengi */
+}
+
+.btn-close {
+  color: #721c24; /* Hata mesajı için buton rengi */
 }
 
 

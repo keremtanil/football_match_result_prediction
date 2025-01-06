@@ -14,16 +14,10 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import os
-from django.contrib import messages
-from django import forms
 
 data ={
     "leagues":[{"league": "Super Lig",},{"league": "Premier League",},{"league": "Bundesliga",},{"league": "Serie A",},{"league": "La Liga",},{"league": "Ligue 1",},{"league": "None",}],
     "seasons": [{"season": f"{year}-{year+1}"} for year in range(datetime.datetime.now().year -2, 2016, -1)] + [{"season": "None"}],
-}
-data_live ={
-    "leagues":[{"league": "Super Lig",},{"league": "Premier League",},{"league": "Bundesliga",},{"league": "Serie A",},{"league": "La Liga",},{"league": "Ligue 1",}],
-    "seasons": [{"season": f"{year}-{year+1}"} for year in range(datetime.datetime.now().year -2, 2016, -1)],
 }
 league_data = {
 "Premier League": {"id": "9", "slug": "Premier-League-Scores-and-Fixtures"},
@@ -74,7 +68,7 @@ def collect_data(request):
     }
     return render(request, "blog/collect_data.html", context)
 
-def scrape_matches(selected_league, selected_season, formatted_date, match_id,request):
+def scrape_matches(selected_league, selected_season, formatted_date, match_id):
     driver = webdriver.Chrome()
     driver.maximize_window()
     # genel_id = match_id
@@ -84,7 +78,7 @@ def scrape_matches(selected_league, selected_season, formatted_date, match_id,re
     driver.get(base_url)
 
     column_headers = ["id", "league", "season", "wk", "day", "date", "time","home","xg1","score","xg2","away","attendance","venue","referee"]
-    match_found = False
+
     try:
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         rows = driver.find_elements(By.CSS_SELECTOR, "tr[data-row]")
@@ -97,7 +91,6 @@ def scrape_matches(selected_league, selected_season, formatted_date, match_id,re
                 continue
 
             if row_date.date() == formatted_date.date():
-                match_found = True
                 row_data = [selected_league,selected_season]
                 
                 cells = row.find_elements(By.XPATH, ".//*[@class='right ' or @class='left ' or @class='center ' or @class='left sort_show' or @class='right sort_show' or @class='right iz']")
@@ -191,8 +184,6 @@ def scrape_matches(selected_league, selected_season, formatted_date, match_id,re
             #     driver.back()
             #     driver.implicitly_wait(30)
                 match_id += 1
-        if not match_found:
-            messages.warning(request, "Belirtilen tarihte maç oynanmamıştır.")
 
     except Exception as e:
         print(f"Hata oluştu: {e}")
@@ -203,27 +194,8 @@ def read_csv_to_dict(file_path):
         reader = csv.DictReader(file)
         return [row for row in reader]
 def clear_csv_file(file_name):
-    try:
-        with open(file_name, mode="r", encoding="utf-8") as file:
-            lines = file.readlines()  # Dosyadaki tüm satırları oku
-
-        if lines:
-            with open(file_name, mode="w", newline="", encoding="utf-8") as file:
-                file.write(lines[0])  # İlk satırı yaz
-                # Diğer satırları atla, yalnızca ilk satır kalır
-        else:
-            print("Dosya boş, işlem yapılmadı.")
-    except FileNotFoundError:
-        print(f"{file_name} dosyası bulunamadı.")
-    except Exception as e:
-        print(f"Hata oluştu: {e}")
-class DataForm(forms.Form):
-    match_date = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date'}),
-        required=True
-    )
-    league = forms.CharField(required=True)
-    season = forms.CharField(required=True)
+    with open(file_name, mode="w", newline="", encoding="utf-8") as file:
+        file.truncate(0)  # Dosyanın içeriğini temizle
 # def merge_data(matches, home_players, away_players):
 #     merged_data = []
 #     for match in matches:
@@ -236,31 +208,38 @@ class DataForm(forms.Form):
 #         merged_data.append(match_data)
 #     return merged_data    
 def live_collect_data(request):
-    form = DataForm(request.GET)   
+    form = DateField(request.GET)  # Formu request.GET ile alıyoruz
+    selected_date = None 
     if form.is_valid():
-        selected_date = form.cleaned_data.get('match_date')
-        selected_league = form.cleaned_data.get('league')
-        selected_season = form.cleaned_data.get('season')
+        selected_date = form.cleaned_data.get('match_date')  # match_date alanını alın
     else:
-        # Form geçersiz olduğunda, hatalarla birlikte sayfayı render edin
+        # Form geçersiz olduğunda bir hata mesajı verebilirsiniz
         return render(request, "blog/live_collect_data.html", {
-            "leagues": data_live["leagues"],
-            "seasons": data_live["seasons"],
+            "leagues": data["leagues"],
+            "seasons": data["seasons"],
             "form": form,
+            "error_message": "Geçerli bir tarih seçmelisiniz.",
+        })
+
+    selected_league = request.GET.get('league')
+    selected_season = request.GET.get('season')
+    if not selected_date or not selected_league or not selected_season:
+        return render(request, "blog/live_collect_data.html", {
+            "leagues": data["leagues"],
+            "seasons": data["seasons"],
+            "form": form,
+            "error_message": "Tüm alanları doldurmalısınız.",
         })
     try:
         # Seçilen tarihi dönüştürme
         formatted_date = datetime.datetime.strptime(str(selected_date), "%Y-%m-%d")
     except ValueError as e:
         return render(request, "blog/live_collect_data.html", {
-            "leagues": data_live["leagues"],
-            "seasons": data_live["seasons"],
+            "leagues": data["leagues"],
+            "seasons": data["seasons"],
             "form": form,
-            "error_message": "Geçersiz bir tarih formatı.",
         })
-    
-
-    scrape_matches(selected_league, selected_season, formatted_date, 1,request)
+    scrape_matches(selected_league, selected_season, formatted_date, 1)
     matches = read_csv_to_dict('data_general.csv')  # Match bilgilerini tutan CSV dosyası
     # home_players = read_csv_to_dict('data_home.csv')  # Home oyuncularını tutan CSV dosyası
     # away_players = read_csv_to_dict('data_away.csv')  # Away oyuncularını tutan CSV dosyası
@@ -271,11 +250,11 @@ def live_collect_data(request):
         match_data = {
             'match': match
         }
-        merged_data.append(match_data)
+    merged_data.append(match_data)
     clear_csv_file("data_general.csv")
     context = {
-        "leagues": data_live["leagues"],
-        "seasons": data_live["seasons"],
+        "leagues": data["leagues"],
+        "seasons": data["seasons"],
         "form": form,
         'merged_data': merged_data,  # Tüm veri
     }

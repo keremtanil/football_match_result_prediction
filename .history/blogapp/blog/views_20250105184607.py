@@ -15,7 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import os
 from django.contrib import messages
-from django import forms
+
 
 data ={
     "leagues":[{"league": "Super Lig",},{"league": "Premier League",},{"league": "Bundesliga",},{"league": "Serie A",},{"league": "La Liga",},{"league": "Ligue 1",},{"league": "None",}],
@@ -217,13 +217,7 @@ def clear_csv_file(file_name):
         print(f"{file_name} dosyası bulunamadı.")
     except Exception as e:
         print(f"Hata oluştu: {e}")
-class DataForm(forms.Form):
-    match_date = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date'}),
-        required=True
-    )
-    league = forms.CharField(required=True)
-    season = forms.CharField(required=True)
+
 # def merge_data(matches, home_players, away_players):
 #     merged_data = []
 #     for match in matches:
@@ -236,18 +230,29 @@ class DataForm(forms.Form):
 #         merged_data.append(match_data)
 #     return merged_data    
 def live_collect_data(request):
-    form = DataForm(request.GET)   
+    form = DateField(request.GET)  # Formu request.GET ile alıyoruz
+    selected_date = None 
     if form.is_valid():
-        selected_date = form.cleaned_data.get('match_date')
-        selected_league = form.cleaned_data.get('league')
-        selected_season = form.cleaned_data.get('season')
+        selected_date = form.cleaned_data.get('match_date')  # match_date alanını alın
     else:
-        # Form geçersiz olduğunda, hatalarla birlikte sayfayı render edin
+        # Form geçersiz olduğunda bir hata mesajı verebilirsiniz
         return render(request, "blog/live_collect_data.html", {
             "leagues": data_live["leagues"],
             "seasons": data_live["seasons"],
             "form": form,
+            "error_message": "Geçerli bir tarih seçmelisiniz.",
         })
+
+    selected_league = request.GET.get('league')
+    selected_season = request.GET.get('season')
+    if not selected_date or not selected_league or not selected_season:
+        return render(request, "blog/live_collect_data.html", {
+            "leagues": data_live["leagues"],
+            "seasons": data_live["seasons"],
+            "form": form,
+            "error_message": "Tüm alanları doldurmalısınız.",
+        })
+    print(form.errors)
     try:
         # Seçilen tarihi dönüştürme
         formatted_date = datetime.datetime.strptime(str(selected_date), "%Y-%m-%d")
@@ -256,10 +261,7 @@ def live_collect_data(request):
             "leagues": data_live["leagues"],
             "seasons": data_live["seasons"],
             "form": form,
-            "error_message": "Geçersiz bir tarih formatı.",
         })
-    
-
     scrape_matches(selected_league, selected_season, formatted_date, 1,request)
     matches = read_csv_to_dict('data_general.csv')  # Match bilgilerini tutan CSV dosyası
     # home_players = read_csv_to_dict('data_home.csv')  # Home oyuncularını tutan CSV dosyası

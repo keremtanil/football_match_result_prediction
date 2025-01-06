@@ -18,6 +18,16 @@
     </div>
     {% endif %}
 </div>
+<div class="message-container">
+    {% if error_message %}
+    <div class="alert-container">
+        <div class="alert error alert-dismissible fade show" role="alert">
+            <span class="alert-text">{{ error_message }}</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    {% endif %}
+</div>
 <div class="container mt-4">
     <!-- Header Section -->
     <h2 class="text-center mb-4">Veri Çekme</h2>
@@ -42,12 +52,6 @@
                     </ul>
                     <input type="hidden" id="leagueInput" name="league" value="{{ selected_league|default:'' }}">
                 </div>
-                <!-- Error Message for League -->
-                {% if form.errors.league %}
-                <div class="field-error">
-                    <i class="fas fa-exclamation-circle"></i> {{ form.errors.league.0 }}
-                </div>
-                {% endif %}
             </div>
 
             <!-- Second Dropdown -->
@@ -67,12 +71,6 @@
                     </ul>
                     <input type="hidden" id="seasonInput" name="season" value="{{ selected_season|default:'' }}">
                 </div>
-                <!-- Error Message for Season -->
-                {% if form.errors.season %}
-                <div class="field-error">
-                    <i class="fas fa-exclamation-circle"></i> {{ form.errors.season.0 }}
-                </div>
-                {% endif %}
             </div>
 
             <!-- Tarih Alanı (Date Picker) -->

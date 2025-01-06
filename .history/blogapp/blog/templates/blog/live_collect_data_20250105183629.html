@@ -42,12 +42,6 @@
                     </ul>
                     <input type="hidden" id="leagueInput" name="league" value="{{ selected_league|default:'' }}">
                 </div>
-                <!-- Error Message for League -->
-                {% if form.errors.league %}
-                <div class="field-error">
-                    <i class="fas fa-exclamation-circle"></i> {{ form.errors.league.0 }}
-                </div>
-                {% endif %}
             </div>
 
             <!-- Second Dropdown -->
@@ -67,12 +61,6 @@
                     </ul>
                     <input type="hidden" id="seasonInput" name="season" value="{{ selected_season|default:'' }}">
                 </div>
-                <!-- Error Message for Season -->
-                {% if form.errors.season %}
-                <div class="field-error">
-                    <i class="fas fa-exclamation-circle"></i> {{ form.errors.season.0 }}
-                </div>
-                {% endif %}
             </div>
 
             <!-- Tarih Alanı (Date Picker) -->
