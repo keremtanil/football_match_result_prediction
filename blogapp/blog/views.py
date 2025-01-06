@@ -26,43 +26,74 @@ data_live ={
     "seasons": [{"season": f"{year}-{year+1}"} for year in range(datetime.datetime.now().year -2, 2016, -1)],
 }
 league_data = {
-"Premier League": {"id": "9", "slug": "Premier-League-Scores-and-Fixtures"},
-"Ligue 1": {"id": "13", "slug": "Ligue-1-Scores-and-Fixtures"},
-"Bundesliga": {"id": "20", "slug": "Bundesliga-Scores-and-Fixtures"},
-"Serie A": {"id": "11", "slug": "Serie-A-Scores-and-Fixtures"},
-"La Liga": {"id": "12", "slug": "La-Liga-Scores-and-Fixtures"},
-"Super Lig": {"id": "26", "slug": "Super-Lig-Scores-and-Fixtures"}
+    "Premier League": {"id": "9", "slug": "Premier-League-Scores-and-Fixtures"},
+    "Ligue 1": {"id": "13", "slug": "Ligue-1-Scores-and-Fixtures"},
+    "Bundesliga": {"id": "20", "slug": "Bundesliga-Scores-and-Fixtures"},
+    "Serie A": {"id": "11", "slug": "Serie-A-Scores-and-Fixtures"},
+    "La Liga": {"id": "12", "slug": "La-Liga-Scores-and-Fixtures"},
+    "Super Lig": {"id": "26", "slug": "Super-Lig-Scores-and-Fixtures"}
 }
 def index(request):
     return render(request, "blog/index.html")
 
 def collect_data(request):
     league = {"Premier League":"ENG-m","Ligue 1":"FRA-m","Bundesliga":"GER-m","Serie A":"ITA-m","La Liga":"ESP-m","Super Lig":"TUR-m","None":"None"}
-    # Dropdown seçimlerini al
     selected_league_first = request.GET.get('league', None)
     selected_league = league.get(selected_league_first, None)
     selected_season = request.GET.get('season', None)
 
     general = tb_general.objects.all()
 
-    # Filtre uygula (dropdown seçimlerine göre)
     if selected_league_first and selected_league_first != "None":
-        general = general.filter(league=selected_league)  # Eğer "league" modelde varsa
+        general = general.filter(league=selected_league)
 
     if selected_season and selected_season != "None":
         season_year = selected_season.split('-')[0]
         general = general.filter(season=season_year)
 
-    # Dinamik olarak oyuncu bilgilerini getirin
+    # Önce maksimum oyuncu sayılarını bul
+    max_home_players = 0
+    max_away_players = 0
+    for match in general:
+        home_count = tb_home.objects.filter(match_ID=match.match_ID).count()
+        away_count = tb_away.objects.filter(match_ID=match.match_ID).count()
+        max_home_players = max(max_home_players, home_count)
+        max_away_players = max(max_away_players, away_count)
+
+    # Boş oyuncu şablonları
+    empty_home_player = {
+        "home_player_" + field: "-" for field in [
+            "name", "shirt_number", "nation", "pos", "age", "min", 
+            "gls", "ast", "pk", "pkatt", "sh", "sot", "crdy", "crdr",
+            "touches", "tkl", "int", "blocks", "xg", "npxg", "xag",
+            "sca", "gca", "cmp", "att", "cmp_rate", "prgp", "carries",
+            "prgc", "att2", "succ"
+        ]
+    }
+    
+    empty_away_player = {
+        "away_player_" + field: "-" for field in [
+            "name", "shirt_number", "nation", "pos", "age", "min", 
+            "gls", "ast", "pk", "pkatt", "sh", "sot", "crdy", "crdr",
+            "touches", "tkl", "int", "blocks", "xg", "npxg", "xag",
+            "sca", "gca", "cmp", "att", "cmp_rate", "prgp", "carries",
+            "prgc", "att2", "succ"
+        ]
+    }
+
     merged_data = []
     for match in general:
-        home_players = tb_home.objects.filter(match_ID=match.match_ID)
-        away_players = tb_away.objects.filter(match_ID=match.match_ID)
+        home_players = list(tb_home.objects.filter(match_ID=match.match_ID))
+        away_players = list(tb_away.objects.filter(match_ID=match.match_ID))
+        
+        # Eksik oyuncular için boş kayıtlar ekle
+        home_players.extend([empty_home_player.copy() for _ in range(max_home_players - len(home_players))])
+        away_players.extend([empty_away_player.copy() for _ in range(max_away_players - len(away_players))])
 
         merged_data.append({
             "match": match,
-            "home_players": list(home_players),
-            "away_players": list(away_players),
+            "home_players": home_players,
+            "away_players": away_players,
         })
 
     context = {
