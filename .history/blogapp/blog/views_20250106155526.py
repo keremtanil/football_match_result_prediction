@@ -142,16 +142,8 @@ def scrape_matches(selected_league, selected_season, formatted_date, match_id,re
                         row_data.append(cell_text)  # Diğer veriler için
                 if row_data:
                     row_data.pop()
-                    if selected_league == "Super Lig":
-                        row_data.insert(7,"")
-                        row_data.insert(9,"")
-                        match_data = [match_id] + row_data
-                    elif selected_league == "Bundesliga" and int(selected_season.split('-')[0]) <= 2022:
-                        row_data.pop(2)
-                        match_data = [match_id] + row_data
-                    else:
-                        match_data = [match_id] + row_data
-                    file_exists = os.path.isfile("data_general.csv")                    
+                    match_data = [match_id] + row_data
+                    file_exists = os.path.isfile("data_general.csv")
                     with open("data_general.csv", mode="a", newline="", encoding="utf-8") as general_file:
                         writer = csv.writer(general_file)
                         if not file_exists:
@@ -269,51 +261,81 @@ def clear_csv_file(file_name):
 #     return merged_data    
 def live_collect_data(request):
     form = DateField(request.GET)
+    selected_date = None
+    selected_league = request.GET.get('league', '')  # Boş string default değer olarak
+    selected_season = request.GET.get('season', '')
     
-    # Sadece form submit edildiğinde işlem yap
-    if request.GET:
-        selected_date = None
-        selected_league = request.GET.get('league', '')
-        selected_season = request.GET.get('season', '')
-        
-        if form.is_valid():
-            selected_date = form.cleaned_data.get('match_date')
-            
-            try:
-                formatted_date = datetime.datetime.strptime(str(selected_date), "%Y-%m-%d")
-                
-                # Veri çekme ve işleme işlemleri
-                scrape_matches(selected_league, selected_season, formatted_date, 1, request)
-                matches = read_csv_to_dict('data_general.csv')
-                
-                merged_data = []
-                for match in matches:
-                    match_data = {'match': match}
-                    merged_data.append(match_data)
-                    
-                clear_csv_file("data_general.csv")
-                
-                context = {
-                    "leagues": data_live["leagues"],
-                    "seasons": data_live["seasons"],
-                    "form": form,
-                    "selected_league": selected_league,
-                    "selected_season": selected_season,
-                    "merged_data": merged_data,
-                }
-                
-                return render(request, "blog/live_collect_data.html", context)
-                
-            except ValueError:
-                pass  # Tarih format hatası - JavaScript zaten kontrol ediyor
+    # Form validasyonu
+    validation_errors = {}
     
-    # İlk sayfa yüklemesi veya hatalı form durumu
+    if form.is_valid():
+        selected_date = form.cleaned_data.get('match_date')
+    else:
+        validation_errors['date'] = 'Geçerli bir tarih seçmelisiniz.'
+    
+    if not selected_league:
+        validation_errors['league'] = 'Bir lig seçiniz.'
+    
+    if not selected_season:
+        validation_errors['season'] = 'Bir sezon seçiniz.'
+    
+    # Eğer herhangi bir validasyon hatası varsa
+    if validation_errors:
+        context = {
+            "leagues": data_live["leagues"],
+            "seasons": data_live["seasons"],
+            "form": form,
+            "selected_league": selected_league,
+            "selected_season": selected_season,
+            "validation_errors": validation_errors,  # Hataları context'e ekle
+        }
+        return render(request, "blog/live_collect_data.html", context)
+
+    # if not selected_date or not selected_league or not selected_season:
+    #     return render(request, "blog/live_collect_data.html", {
+    #         "leagues": data_live["leagues"],
+    #         "seasons": data_live["seasons"],
+    #         "form": form,
+    #         "error_message": "Tüm alanları doldurmalısınız.",
+    #     })
+
+    try:
+        # Seçilen tarihi dönüştürme
+        formatted_date = datetime.datetime.strptime(str(selected_date), "%Y-%m-%d")
+    except ValueError as e:
+        validation_errors['date'] = 'Geçersiz tarih formatı.'
+        context = {
+            "leagues": data_live["leagues"],
+            "seasons": data_live["seasons"],
+            "form": form,
+            "selected_league": selected_league,
+            "selected_season": selected_season,
+            "validation_errors": validation_errors,
+        }
+        return render(request, "blog/live_collect_data.html", context)
+
+    scrape_matches(selected_league, selected_season, formatted_date, 1,request)
+    matches = read_csv_to_dict('data_general.csv')  # Match bilgilerini tutan CSV dosyası
+    # home_players = read_csv_to_dict('data_home.csv')  # Home oyuncularını tutan CSV dosyası
+    # away_players = read_csv_to_dict('data_away.csv')  # Away oyuncularını tutan CSV dosyası
+
+    # merged_data = merge_data(matches, home_players, away_players)
+    merged_data = []
+    for match in matches:
+        match_data = {
+            'match': match
+        }
+        merged_data.append(match_data)
+    clear_csv_file("data_general.csv")
     context = {
         "leagues": data_live["leagues"],
         "seasons": data_live["seasons"],
         "form": form,
+        "selected_league": selected_league,
+        "selected_season": selected_season,
+        "merged_data": merged_data,
     }
-    
+
     return render(request, "blog/live_collect_data.html", context)
 def predict(request):
     return render(request, "blog/predict.html")

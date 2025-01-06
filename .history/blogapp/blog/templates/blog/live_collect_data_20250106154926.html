@@ -41,9 +41,6 @@
                         {% endfor %}
                     </ul>
                     <input type="hidden" id="leagueInput" name="league" value="{{ selected_league|default:'' }}">
-                    <div id="leagueAlert" class="alert alert-warning {% if validation_errors.league and request.method == 'GET' %}show{% endif %}">
-                        <i class="fas fa-exclamation-triangle"></i> Lütfen bir lig seçiniz.
-                    </div>
                 </div>
             </div>
 
@@ -63,9 +60,6 @@
                         {% endfor %}
                     </ul>
                     <input type="hidden" id="seasonInput" name="season" value="{{ selected_season|default:'' }}">
-                    <div id="seasonAlert" class="alert alert-warning {% if validation_errors.season and request.method == 'GET' %}show{% endif %}">
-                        <i class="fas fa-exclamation-triangle"></i> Lütfen bir sezon seçiniz.
-                    </div>
                 </div>
             </div>
 
@@ -266,70 +260,6 @@
       document.getElementById(dropdownId).textContent = selectedText;
       // İlgili gizli input'un değerini seçilen metinle güncelle
       document.getElementById(inputId).value = selectedText || '';  // Eğer seçilmezse boş string
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-        // Sayfa ilk yüklendiğinde tüm alertleri gizle
-        const allAlerts = document.querySelectorAll('.alert-warning');
-        allAlerts.forEach(alert => {
-            alert.style.display = 'none';
-        });
-
-        // Form submit olayını dinle
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault(); // Önce form submit'i engelle
-            
-            const leagueInput = document.getElementById('leagueInput');
-            const seasonInput = document.getElementById('seasonInput');
-            const dateInput = document.querySelector('input[name="match_date"]');
-            
-            const leagueAlert = document.getElementById('leagueAlert');
-            const seasonAlert = document.getElementById('seasonAlert');
-            const dateAlert = document.querySelector('.date-alert');
-            
-            let isValid = true;
-
-            // Tüm alanları kontrol et
-            if (!leagueInput.value) {
-                leagueAlert.style.display = 'block';
-                isValid = false;
-            } else {
-                leagueAlert.style.display = 'none';
-            }
-            
-            if (!seasonInput.value) {
-                seasonAlert.style.display = 'block';
-                isValid = false;
-            } else {
-                seasonAlert.style.display = 'none';
-            }
-            
-            if (!dateInput.value) {
-                if(dateAlert) dateAlert.style.display = 'block';
-                isValid = false;
-            } else {
-                if(dateAlert) dateAlert.style.display = 'none';
-            }
-
-            // Eğer tüm alanlar doluysa formu submit et
-            if (isValid) {
-                this.submit();
-            }
-        });
-    });
-
-    // Dropdown seçildiğinde alert'i gizle ve değeri güncelle
-    function updateDropdownAndInput(dropdownId, inputId, value) {
-        const dropdown = document.getElementById(dropdownId);
-        const input = document.getElementById(inputId);
-        dropdown.textContent = value;
-        input.value = value;
-        
-        // İlgili alert'i gizle
-        if (dropdownId === 'leagueDropdown') {
-            document.getElementById('leagueAlert').style.display = 'none';
-        } else if (dropdownId === 'seasonDropdown') {
-            document.getElementById('seasonAlert').style.display = 'none';
-        }
-    }
+  }
 </script>
 {% endblock %}

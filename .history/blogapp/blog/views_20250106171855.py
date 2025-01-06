@@ -146,7 +146,7 @@ def scrape_matches(selected_league, selected_season, formatted_date, match_id,re
                         row_data.insert(7,"")
                         row_data.insert(9,"")
                         match_data = [match_id] + row_data
-                    elif selected_league == "Bundesliga" and int(selected_season.split('-')[0]) <= 2022:
+                    elif selected_league == "Bundesliga" and selected_season.split('-')[0] <= 2022:
                         row_data.pop(2)
                         match_data = [match_id] + row_data
                     else:

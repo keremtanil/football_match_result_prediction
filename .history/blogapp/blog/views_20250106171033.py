@@ -146,11 +146,6 @@ def scrape_matches(selected_league, selected_season, formatted_date, match_id,re
                         row_data.insert(7,"")
                         row_data.insert(9,"")
                         match_data = [match_id] + row_data
-                    elif selected_league == "Bundesliga" and int(selected_season.split('-')[0]) <= 2022:
-                        row_data.pop(2)
-                        match_data = [match_id] + row_data
-                    else:
-                        match_data = [match_id] + row_data
                     file_exists = os.path.isfile("data_general.csv")                    
                     with open("data_general.csv", mode="a", newline="", encoding="utf-8") as general_file:
                         writer = csv.writer(general_file)

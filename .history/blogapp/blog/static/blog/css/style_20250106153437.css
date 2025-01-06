@@ -81,56 +81,32 @@ input[type="date"].form-control:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;  
+  margin-top: 20px; /* Üst boşluk */
 }
 
 .alert-container {
-  width: 80%; 
-  max-width: 600px;  
+  width: 80%; /* Mesaj alanı genişliği */
+  max-width: 600px; /* Maksimum genişlik */
 }
 
 .alert {
-  background-color: #f8f9fa; 
-  border: 1px solid #ced4da; 
-  border-radius: 8px; 
-  padding: 15px; 
-  font-size: 16px; 
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);  
+  background-color: #f8f9fa; /* Hafif gri arka plan */
+  border: 1px solid #ced4da; /* İnce kenar */
+  border-radius: 8px; /* Yuvarlatılmış köşeler */
+  padding: 15px; /* İç boşluk */
+  font-size: 16px; /* Yazı boyutu */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge */
 }
 
 .alert .alert-text {
-  color: #212529; 
-  font-family: 'Arial', sans-serif;  
+  color: #212529; /* Yazı rengi */
+  font-family: 'Arial', sans-serif; /* Modern yazı tipi */
 }
 
 .btn-close {
-  color: #6c757d;  
-}
-.alert-warning {
-  background-color: #fff3cd;
-  border-color: #ffecb5;
-  color: #664d03;
-  padding: 8px 12px;
-  font-size: 13px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  margin-top: 5px;
-  display: none; 
-  position: absolute;
-  width: 100%;
-  z-index: 1000;
+  color: #6c757d; /* Buton rengi */
 }
 
-.dropdown {
-  position: relative;
-  margin-bottom: 10px;
-}
-
-/* İkon stili */
-.alert-warning i {
-  margin-right: 5px;
-  color: #856404;
-}
 
 
 
