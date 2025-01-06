@@ -1,0 +1,78 @@
+html, body {
+    margin: 0 ; /* Varsayılan marjinleri devre dışı bırak */
+    padding: 0 ;
+    height: 100% ; /* Tam yüksekliği zorunlu kıl */
+    overflow: hidden; /* Kaydırmayı engelle */
+}
+form {
+    max-width: 400px; /* Form genişliğini sınırlayın */
+    margin: 0 auto; /* Ortala */
+    padding: 20px; /* İç boşluk ekle */
+    border: 1px solid #ddd; /* Hafif bir çerçeve ekle */
+    border-radius: 8px; /* Yuvarlatılmış köşeler */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hafif bir gölge */
+    background-color: #fff; /* Beyaz arka plan */
+}
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: space-between;
+}
+/* Başlık Stili */
+h1 {
+    text-align: center; /* Ortala */
+    font-size: 24px; /* Yazı boyutu */
+    color: #333; /* Yazı rengi */
+    margin-bottom: 20px; /* Alt boşluk */
+}
+
+/* Input Alanları */
+input[type="text"],
+input[type="password"] {
+    font-size: 16px; /* Yazı boyutu */
+    padding: 10px; /* İç boşluk */
+    border: 1px solid #ccc; /* Çerçeve rengi */
+    border-radius: 4px; /* Yuvarlatılmış köşeler */
+    width: 100%; /* Genişliği kapsasın */
+    box-sizing: border-box; /* Çerçeve ve padding hesaba dahil */
+}
+
+/* Submit Butonu */
+input[type="submit"] {
+    width: 100%; /* Genişliği kapsasın */
+    padding: 10px; /* İç boşluk */
+    background-color: #28a745; /* Yeşil renk */
+    color: #fff; /* Beyaz yazı */
+    border: none; /* Çerçeve yok */
+    border-radius: 4px; /* Yuvarlatılmış köşeler */
+    cursor: pointer; /* El işareti */
+    font-size: 16px; /* Yazı boyutu */
+    transition: background-color 0.3s ease; /* Geçiş efekti */
+}
+
+input[type="submit"]:hover {
+    background-color: #218838; /* Daha koyu yeşil */
+}
+
+/* Label Stilleri */
+label {
+    font-weight: bold; /* Kalın yazı */
+    color: #555; /* Yazı rengi */
+    margin-bottom: 5px; /* Alt boşluk */
+    display: block; /* Yeni satır */
+}
+
+/* Form Altındaki Boşluklar */
+.mb-3 {
+    margin-bottom: 20px; /* Daha geniş boşluk */
+}
+
+/* Form Konteyneri */
+.container {
+    margin-top: 0px !important; /* Üst boşluk */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Sayfanın tamamını kapsasın */
+}

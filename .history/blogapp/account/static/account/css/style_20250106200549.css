@@ -1,0 +1,157 @@
+html, body {
+    margin: 0 ; /* Varsayılan marjinleri devre dışı bırak */
+    padding: 0 ;
+    height: 100% ; /* Tam yüksekliği zorunlu kıl */
+    overflow: hidden; /* Kaydırmayı engelle */
+}
+form {
+    max-width: 400px; /* Form genişliğini sınırlayın */
+    margin: 0 auto; /* Ortala */
+    padding: 20px; /* İç boşluk ekle */
+    border: 1px solid #ddd; /* Hafif bir çerçeve ekle */
+    border-radius: 8px; /* Yuvarlatılmış köşeler */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hafif bir gölge */
+    background-color: #fff; /* Beyaz arka plan */
+}
+/* Form Row Stilleri */
+.form-row {
+    display: flex; /* Satırda yan yana hizalama */
+    gap: 20px; /* Elemanlar arası boşluk */
+    margin-bottom: 20px; /* Alt boşluk */
+}
+
+/* Yan yana inputların aynı genişlikte olmasını sağlar */
+.form-row .mb-3 {
+    flex: 1; /* Esnek genişlik */
+}
+
+/* Küçük ekranlarda alt alta hizalama */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column; /* Küçük ekranlar için alt alta */
+    }
+}
+/* Başlık Stili */
+h1 {
+    text-align: center; /* Ortala */
+    font-size: 24px; /* Yazı boyutu */
+    color: #333; /* Yazı rengi */
+    margin-bottom: 20px; /* Alt boşluk */
+}
+
+/* Input Alanları */
+input[type="text"],
+input[type="password"] {
+    font-size: 16px; /* Yazı boyutu */
+    padding: 10px; /* İç boşluk */
+    border: 1px solid #ccc; /* Çerçeve rengi */
+    border-radius: 4px; /* Yuvarlatılmış köşeler */
+    width: 100%; /* Genişliği kapsasın */
+    box-sizing: border-box; /* Çerçeve ve padding hesaba dahil */
+}
+
+/* Submit Butonu */
+input[type="submit"] {
+    width: 100%; /* Genişliği kapsasın */
+    padding: 10px; /* İç boşluk */
+    background-color: #28a745; /* Yeşil renk */
+    color: #fff; /* Beyaz yazı */
+    border: none; /* Çerçeve yok */
+    border-radius: 4px; /* Yuvarlatılmış köşeler */
+    cursor: pointer; /* El işareti */
+    font-size: 16px; /* Yazı boyutu */
+    transition: background-color 0.3s ease; /* Geçiş efekti */
+}
+
+input[type="submit"]:hover {
+    background-color: #218838; /* Daha koyu yeşil */
+}
+
+/* Label Stilleri */
+label {
+    font-weight: bold; /* Kalın yazı */
+    color: #555; /* Yazı rengi */
+    margin-bottom: 5px; /* Alt boşluk */
+    display: block; /* Yeni satır */
+}
+
+/* Form Altındaki Boşluklar */
+.mb-3 {
+    margin-bottom: 20px; /* Daha geniş boşluk */
+}
+
+/* Form Konteyneri */
+.container {
+    margin-top: 0px !important; /* Üst boşluk */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Sayfanın tamamını kapsasın */
+}
+/* Genel Ayarlar */
+body {
+    font-family: 'Poppins', sans-serif; /* Modern bir font */
+    background-color: #f7f8fc; /* Hafif bir arka plan rengi */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Form Kutusu */
+form {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px; /* Yuvarlatılmış köşeler */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Form Başlığı */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Input ve Label */
+label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+    color: #555;
+}
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+input:focus {
+    border-color: #6c63ff; /* Odak rengi */
+    box-shadow: 0 0 4px rgba(108, 99, 255, 0.4);
+    outline: none;
+}
+
+/* Buton */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+button:hover {
+    background: #218838; /* Daha koyu bir yeşil */
+}
+

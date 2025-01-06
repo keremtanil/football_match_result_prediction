@@ -1,0 +1,17 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}"> 
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="container-lg px-5">
+        <div class="d-flex justify-content-center align-items-center gap-3">
+            <button type="button" class="btn btn-primary btn-custom flex-fill" onclick="location.href='{% url 'collect' %}'">Veri Görüntüle</button>
+            <button type="button" class="btn btn-secondary btn-custom flex-fill" onclick="location.href='{% url 'live' %}'">Veri Çek</button>
+            <button type="button" class="btn btn-primary btn-custom flex-fill" onclick="location.href='{% url 'predict' %}'">Tahmin Et</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

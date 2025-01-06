@@ -1,0 +1,28 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'account/css/style.css' %}"> 
+{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="col">
+        <h1>Giriş Yap</h1>
+        <form action="{% url 'login' % }" method="POST">
+            {% if error %}
+                <div class="alert alert-danger">
+                    {{error}}
+                </div>
+            <div class="mb-3">
+                <label for="username" class="form-label">Kullanıcı Adı</label>
+                <input type="text" class="form-control" name="username">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Şifre</label>
+                <input type="password" class="form-control" name="password">
+            </div>
+            <div class="mb-3">
+                <input type="submit" value="Giriş Yap" class="btn btn-success">
+            </div>
+</div>
+{% endblock %}

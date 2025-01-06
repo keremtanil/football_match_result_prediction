@@ -1,0 +1,46 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'account/css/style.css' %}"> 
+{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <form class="form" method="POST">
+        <h1>Kayıt Ol</h1>
+        {% csrf_token %}
+        {% if error %}
+            <div class="alert alert-danger">
+                {{error}}
+            </div>
+        {% endif %}
+        <div class="form-row">
+            <div class="mb-3">
+                <label for="name">Ad</label>
+                <input type="text" name="name" placeholder="Adınızı girin">
+            </div>
+            <div class="mb-3">
+                <label for="surname">Soyad</label>
+                <input type="text" name="surname" placeholder="Soyadınızı girin">
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="email">Email</label>
+            <input type="email" name="email" placeholder="Email adresinizi girin">
+        </div>
+        <div class="mb-3">
+            <label for="username">Kullanıcı Adı</label>
+            <input type="text" name="username" placeholder="Kullanıcı adınızı girin">
+        </div>
+        <div class="mb-3">
+            <label for="password">Şifre</label>
+            <input type="password" name="password" placeholder="Şifrenizi girin">
+        </div>
+        <div class="mb-3">
+            <label for="repassword">Şifrenizi Tekrar Girin</label>
+            <input type="password" name="repassword" placeholder="Şifrenizi tekrar girin">
+        </div>
+        <input type="submit" class="btn btn-success" value="Kayıt Ol">
+    </form>   
+</div>
+{% endblock %}
