@@ -32,6 +32,7 @@ Pygments==2.17.2
 PySocks==1.7.1
 python-dateutil==2.8.2
 pytz==2024.2
+pywin32==306
 pyzmq==25.1.2
 selenium==4.27.1
 six==1.16.0
