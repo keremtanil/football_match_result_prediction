@@ -2,8 +2,8 @@ html, body {
     margin: 0 ; /* Varsayılan marjinleri devre dışı bırak */
     padding: 0 ;
     height: 100% ; /* Tam yüksekliği zorunlu kıl */
-    /* overflow-x: hidden;  /* Yatay kaydırma engellensin 
-    overflow-y: auto;    Dikey kaydırma aktif */
+    overflow-x: hidden;  /* Yatay kaydırma engellensin */
+    overflow-y: auto;    /* Dikey kaydırma aktif */
 }
 .vh-100 {
 height: 100vh; /* Tam görünüm alanı yüksekliği */
@@ -131,20 +131,6 @@ input[type="date"].form-control:focus {
 .alert-warning i {
   margin-right: 5px;
   color: #856404;
-}
-.clear-btn {
-  width: 100%;
-  background-color: #dc3545;
-  color: white;
-  height: 50px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  margin-top: 10px;
-}
-
-.clear-btn:hover {
-  background-color: #c82333;
 }
 
 

@@ -132,20 +132,6 @@ input[type="date"].form-control:focus {
   margin-right: 5px;
   color: #856404;
 }
-.clear-btn {
-  width: 100%;
-  background-color: #dc3545;
-  color: white;
-  height: 50px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  margin-top: 10px;
-}
-
-.clear-btn:hover {
-  background-color: #c82333;
-}
 
 
 

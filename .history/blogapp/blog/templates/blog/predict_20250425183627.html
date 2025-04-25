@@ -1,21 +1,12 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 {% load static %}
-
 {% block css_files %}
-    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}"> 
 {% endblock %}
 
 {% block content %}
 <div class="form-container">
-    {% if home_score is not None and away_score is not None %}
-    <div class="result-container">
-        <h3>⚽ Tahmin Sonucu</h3>
-        <p><strong>Ev Sahibi Skor:</strong> {{ home_score }}</p>
-        <p><strong>Deplasman Skor:</strong> {{ away_score }}</p>
-    </div>
-    {% endif %}
-
-    <form method="POST" action="{% url 'predict' %}" id="prediction-form">
+    <form method="POST" action="{% url 'tahmin_yap' %}">
         {% csrf_token %}
         <div class="form-group">
             <label for="region">Lig</label>
@@ -53,23 +44,15 @@
             <label for="referee">Hakem</label>
             <input type="text" name="referee" id="referee" class="form-control">
         </div>
-        <button type="submit" class="submit-btn" id="submit-btn">Tahmin Et</button>
-        <button type="button" class="clear-btn" onclick="clearForm()">Temizle</button>
+        <button type="submit" class="submit-btn">Tahmin Et</button>
     </form>
+
+    {% if home_score is not None and away_score is not None %}
+    <div class="result-container">
+        <h3>⚽ Tahmin Sonucu</h3>
+        <p><strong>Ev Sahibi Skor:</strong> {{ home_score }}</p>
+        <p><strong>Deplasman Skor:</strong> {{ away_score }}</p>
+    </div>
+    {% endif %}
 </div>
-
 {% endblock %}
-
-<script>
-    // Temizle butonunun işlevi
-    function clearForm() {
-        document.getElementById('prediction-form').reset(); // Formu sıfırlama işlemi
-    }
-
-    // Tahmin Et butonunun submit işlemi
-    document.getElementById('prediction-form').addEventListener('submit', function(event) {
-        // Formun submit işlemi gerçekleşecek ancak inputların boşalmaması sağlanacak.
-        event.preventDefault(); // Formun otomatik gönderilmesini engelle
-        this.submit(); // Formu elle gönderiyoruz
-    });
-</script>

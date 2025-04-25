@@ -53,7 +53,7 @@
             <label for="referee">Hakem</label>
             <input type="text" name="referee" id="referee" class="form-control">
         </div>
-        <button type="submit" class="submit-btn" id="submit-btn">Tahmin Et</button>
+        <button type="submit" class="submit-btn">Tahmin Et</button>
         <button type="button" class="clear-btn" onclick="clearForm()">Temizle</button>
     </form>
 </div>
@@ -61,15 +61,7 @@
 {% endblock %}
 
 <script>
-    // Temizle butonunun işlevi
     function clearForm() {
-        document.getElementById('prediction-form').reset(); // Formu sıfırlama işlemi
+        document.getElementById('prediction-form').reset(); // Formu sıfırlamak için
     }
-
-    // Tahmin Et butonunun submit işlemi
-    document.getElementById('prediction-form').addEventListener('submit', function(event) {
-        // Formun submit işlemi gerçekleşecek ancak inputların boşalmaması sağlanacak.
-        event.preventDefault(); // Formun otomatik gönderilmesini engelle
-        this.submit(); // Formu elle gönderiyoruz
-    });
 </script>

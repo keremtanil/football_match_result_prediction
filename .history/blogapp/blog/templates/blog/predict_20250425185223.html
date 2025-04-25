@@ -61,15 +61,14 @@
 {% endblock %}
 
 <script>
-    // Temizle butonunun işlevi
+    // Temizle butonunu işlevsel hale getiriyoruz
     function clearForm() {
-        document.getElementById('prediction-form').reset(); // Formu sıfırlama işlemi
+        document.getElementById('prediction-form').reset(); // Formu sıfırlamak için
     }
 
-    // Tahmin Et butonunun submit işlemi
+    // Tahmin Et butonunun otomatik form sıfırlamasını engelliyoruz
     document.getElementById('prediction-form').addEventListener('submit', function(event) {
-        // Formun submit işlemi gerçekleşecek ancak inputların boşalmaması sağlanacak.
-        event.preventDefault(); // Formun otomatik gönderilmesini engelle
-        this.submit(); // Formu elle gönderiyoruz
+        event.preventDefault(); // Formun submit olmasını engeller
+        this.submit(); // Formu elle göndermemizi sağlar
     });
 </script>
