@@ -53,12 +53,12 @@
     <button type="submit" class="submit-btn" id="submit-btn">Tahmin Et</button>
     <button type="button" class="clear-btn" onclick="clearForm()">Temizle</button>
 </form>
+Use code with caution.
 </div>
-
+{% endblock %}
 <script>
     function clearForm() {
         // Sayfayı yeniden yükleyerek hem formu hem sonucu sıfırla
         window.location.href = window.location.pathname;
     }
 </script>
-{% endblock %}

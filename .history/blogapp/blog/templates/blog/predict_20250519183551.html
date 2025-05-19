@@ -16,49 +16,56 @@
     {% csrf_token %}
     <div class="form-group">
         <label for="region">Lig</label>
-        <input type="text" name="region" id="region" class="form-control" placeholder="Premier League, Serie A..."value="{{ request.POST.region }}">
+        <input type="text" name="region" id="region" class="form-control" placeholder="Premier League, Serie A...">
     </div>
     <div class="form-group">
         <label for="year">Yıl</label>
-        <input type="number" name="year" id="year" class="form-control" value="{{ request.POST.year }}">
+        <input type="number" name="year" id="year" class="form-control">
     </div>
     <div class="form-group">
         <label for="home_team">Ev Sahibi Takım</label>
-        <input type="text" name="home_team" id="home_team" class="form-control" value="{{ request.POST.home_team }}">
+        <input type="text" name="home_team" id="home_team" class="form-control">
     </div>
     <div class="form-group">
         <label for="away_team">Deplasman Takım</label>
-        <input type="text" name="away_team" id="away_team" class="form-control" value="{{ request.POST.away_team }}">
+        <input type="text" name="away_team" id="away_team" class="form-control">
     </div>
     <div class="form-group">
         <label for="xg1">XG1 (Ev Sahibi için)</label>
-        <input type="text" name="xg1" id="xg1" class="form-control"value="{{ request.POST.xg1 }}">
+        <input type="text" name="xg1" id="xg1" class="form-control">
     </div>
     <div class="form-group">
         <label for="xg2">XG2 (Deplasman için)</label>
-        <input type="text" name="xg2" id="xg2" class="form-control" value="{{ request.POST.xg2 }}">
+        <input type="text" name="xg2" id="xg2" class="form-control">
     </div>
     <div class="form-group">
         <label for="attendance">Seyirci</label>
-        <input type="number" name="attendance" id="attendance" class="form-control" value="{{ request.POST.attendance }}">
+        <input type="number" name="attendance" id="attendance" class="form-control">
     </div>
     <div class="form-group">
         <label for="venue">Stadyum</label>
-        <input type="text" name="venue" id="venue" class="form-control" value="{{ request.POST.venue }}">
+        <input type="text" name="venue" id="venue" class="form-control">
     </div>
     <div class="form-group">
         <label for="referee">Hakem</label>
-        <input type="text" name="referee" id="referee" class="form-control" value="{{ request.POST.referee }}">
+        <input type="text" name="referee" id="referee" class="form-control">
     </div>
     <button type="submit" class="submit-btn" id="submit-btn">Tahmin Et</button>
     <button type="button" class="clear-btn" onclick="clearForm()">Temizle</button>
 </form>
+Use code with caution.
 </div>
-
-<script>
-    function clearForm() {
-        // Sayfayı yeniden yükleyerek hem formu hem sonucu sıfırla
-        window.location.href = window.location.pathname;
-    }
-</script>
 {% endblock %}
+<script>
+    // Temizle butonunun işlevi
+    function clearForm() {
+        document.getElementById('prediction-form').reset(); // Formu sıfırlama işlemi
+    }
+
+    // Tahmin Et butonunun submit işlemi
+    document.getElementById('prediction-form').addEventListener('submit', function(event) {
+        // Formun submit işlemi gerçekleşecek ancak inputların boşalmaması sağlanacak.
+        event.preventDefault(); // Formun otomatik gönderilmesini engelle
+        this.submit(); // Formu elle gönderiyoruz
+    });
+</script>

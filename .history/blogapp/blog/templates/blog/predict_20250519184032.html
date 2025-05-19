@@ -54,11 +54,10 @@
     <button type="button" class="clear-btn" onclick="clearForm()">Temizle</button>
 </form>
 </div>
-
+{% endblock %}
 <script>
     function clearForm() {
         // Sayfayı yeniden yükleyerek hem formu hem sonucu sıfırla
         window.location.href = window.location.pathname;
     }
 </script>
-{% endblock %}

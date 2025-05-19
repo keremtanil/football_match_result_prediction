@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
+    <style>
+        .error-message {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: .75rem 1.25rem;
+            margin-bottom: 1rem;
+            border-radius: .25rem;
+        }
+        .result-container.error {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffeeba; /* Daha yumuşak bir sarı */
+            color: #856404;
+        }
+        .result-container.error h3 {
+            color: #856404;
+        }
+        .clear-btn-link { /* Temizle butonu için stil */
+            display: inline-block;
+            padding: 10px 15px;
+            font-size: 16px; /* submit-btn ile aynı veya benzer */
+            font-weight: bold; /* submit-btn ile aynı veya benzer */
+            color: white;
+            background-color: #6c757d; /* Gri tonu, submit-btn'den farklı */
+            border: none;
+            border-radius: 5px; /* submit-btn ile aynı veya benzer */
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: 10px; /* Diğer butonla arasına boşluk */
+        }
+        .clear-btn-link:hover {
+            background-color: #5a6268;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    {% if error_message %}
+    <div class="error-message">
+        <p><strong>Hata:</strong> {{ error_message }}</p>
+    </div>
+    {% endif %}
+
+    {% if home_score is not None and away_score is not None %}
+        {% if home_score == "Hata" or away_score == "Hata" %}
+            <div class="result-container error" id="result-container">
+                <h3>⚠️ Tahmin Başarısız</h3>
+                <p>Model bir skor üretemedi. Lütfen girdilerinizi kontrol edin veya sorun devam ederse site yöneticisi ile iletişime geçin.</p>
+                 {% if not error_message and not form_data.region %} <!-- Sadece model hatası varsa ve başka bir hata yoksa (ve form temiz değilse) -->
+                    <p><em>Girdiğiniz değerler aşağıda korunmuştur.</em></p>
+                 {% endif %}
+            </div>
+        {% else %}
+            <div class="result-container" id="result-container">
+                <h3>⚽ Tahmin Sonucu</h3>
+                <p><strong>Ev Sahibi Skor:</strong> {{ home_score }}</p>
+                <p><strong>Deplasman Skor:</strong> {{ away_score }}</p>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <form method="POST" action="{% url 'predict' %}" id="prediction-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="region">Lig</label>
+            <input type="text" name="region" id="region" class="form-control" placeholder="Premier League, Serie A..." value="{{ form_data.region | default:'' }}">
+        </div>
+        <div class="form-group">
+            <label for="year">Yıl</label>
+            <input type="number" name="year" id="year" class="form-control" placeholder="Örn: 2023" value="{{ form_data.year | default:'' }}">
+        </div>
+        <div class="form-group">
+            <label for="home_team">Ev Sahibi Takım</label>
+            <input type="text" name="home_team" id="home_team" class="form-control" value="{{ form_data.home_team | default:'' }}">
+        </div>
+        <div class="form-group">
+            <label for="away_team">Deplasman Takım</label>
+            <input type="text" name="away_team" id="away_team" class="form-control" value="{{ form_data.away_team | default:'' }}">
+        </div>
+        <div class="form-group">
+            <label for="xg1">XG1 (Ev Sahibi için)</label>
+            <input type="text" name="xg1" id="xg1" class="form-control" placeholder="Örn: 1.52" value="{{ form_data.xg1 | default:'' }}">
+        </div>
+        <div class="form-group">
+            <label for="xg2">XG2 (Deplasman için)</label>
+            <input type="text" name="xg2" id="xg2" class="form-control" placeholder="Örn: 0.89" value="{{ form_data.xg2 | default:'' }}">
+        </div>
+        <div class="form-group">
+            <label for="attendance">Seyirci</label>
+            <input type="number" name="attendance" id="attendance" class="form-control" placeholder="Örn: 55000" value="{{ form_data.attendance | default:'' }}">
+        </div>
+        <div class="form-group">
+            <label for="venue">Stadyum</label>
+            <input type="text" name="venue" id="venue" class="form-control" value="{{ form_data.venue | default:'' }}">
+        </div>
+        <div class="form-group">
+            <label for="referee">Hakem</label>
+            <input type="text" name="referee" id="referee" class="form-control" value="{{ form_data.referee | default:'' }}">
+        </div>
+        <button type="submit" class="submit-btn" id="submit-btn">Tahmin Et</button>
+        <a href="{% url 'predict' %}" class="clear-btn-link">Temizle</a>
+    </form>
+</div>
+
+{% endblock %}
+
+{# Bu sayfa için artık özel bir script bloğuna ihtiyaç yok. #}
+{# <script> ... </script> #}
