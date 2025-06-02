@@ -17,6 +17,9 @@ class tb_general(models.Model):
     venue = models.CharField(max_length=200)
     referee = models.CharField(max_length=100)
 
+    def __str__(self):
+        return f"{self.home} vs {self.away} - {self.league} {self.season}"
+
     class Meta:
         db_table = 'tb_general'
 

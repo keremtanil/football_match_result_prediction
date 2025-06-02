@@ -21,7 +21,7 @@ class ViewIntegrationTests(TestCase):
         # Örnek veriler
         tb_general.objects.create(match_ID=1,league='Premier League',season='2023-2024',wk='35',day='Saturday',date='2024-05-01',time='15:00',home='Team A',xg1='1.5',score='2-1',xg2='0.8',away='Team B',attendance='25000',venue='Stadium XYZ',referee='Referee Name'
         )
-        match_instance = tb_general.objects.get(id=1)  
+        match_instance = tb_general.objects.get(id=1)  # veya oluşturmak için: tb_general.objects.create(...)
 
         # tb_home için örnek kayıt oluştur
         tb_home.objects.create(match_ID=match_instance,home_player_name='John Doe',home_player_shirt_number='10',home_player_nation='USA',home_player_pos='FW',home_player_age='25',home_player_min='90',home_player_gls='1',home_player_ast='0',home_player_pk='0',home_player_pkatt='0',home_player_sh='3',home_player_sot='2',home_player_crdy='1',home_player_crdr='0',home_player_touches='45',
@@ -59,7 +59,7 @@ from selenium.webdriver.common.by import By
 class FunctionalTests(LiveServerTestCase):
 
     def setUp(self):
-        self.driver = webdriver.Chrome()  # ChromeDriver yolunu ayarla 
+        self.driver = webdriver.Chrome()  # ChromeDriver yolunu ayarla ya da Firefox kullan
         tb_general.objects.create(match_ID=1,league='Premier League',season='2023-2024',wk='35',day='Saturday',date='2024-05-01',time='15:00',home='Team A',xg1='1.5',score='2-1',xg2='0.8',away='Team B',attendance='25000',venue='Stadium XYZ',referee='Referee Name')
 
     def tearDown(self):
@@ -67,9 +67,9 @@ class FunctionalTests(LiveServerTestCase):
 
     def test_homepage_loads_and_shows_match(self):
         self.driver.get(self.live_server_url + reverse('home'))
-        # Örnek: Ana sayfada "Veri Görüntüle" yazısı görünür mü?
+        # Örnek: Ana sayfada "Premier League" yazısı görünür mü?
         body_text = self.driver.find_element(By.TAG_NAME, 'body').text
-        self.assertIn('Veri Görüntüle', body_text)
+        self.assertIn('Premier League', body_text)
 
 # --- Acceptance Tests ---
 class AcceptanceTests(TestCase):

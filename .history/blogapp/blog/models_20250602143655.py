@@ -17,13 +17,14 @@ class tb_general(models.Model):
     venue = models.CharField(max_length=200)
     referee = models.CharField(max_length=100)
 
+    def __str__(self):
+        return f"{self.home} vs {self.away} - {self.league} {self.season}"
+
     class Meta:
         db_table = 'tb_general'
 
 class tb_home(models.Model):
-    match_ID = models.BigIntegerField()
-    league = models.CharField(max_length=100)
-    season = models.CharField(max_length=100)
+    match_ID = models.ForeignKey(tb_general, on_delete=models.CASCADE, db_column='match_ID')
     home_player_name = models.CharField(max_length=100)
     home_player_shirt_number = models.CharField(max_length=100)
     home_player_nation = models.CharField(max_length=100)
@@ -60,9 +61,7 @@ class tb_home(models.Model):
         db_table = 'tb_home'
 
 class tb_away(models.Model):
-    match_ID = models.BigIntegerField()
-    league = models.CharField(max_length=100)
-    season = models.CharField(max_length=100)
+    match_ID = models.ForeignKey(tb_general, on_delete=models.CASCADE, db_column='match_ID')
     away_player_name = models.CharField(max_length=100)
     away_player_shirt_number = models.CharField(max_length=100)
     away_player_nation = models.CharField(max_length=100)
